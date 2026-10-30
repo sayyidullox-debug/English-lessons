@@ -1,0 +1,21 @@
+{
+  "name": "ai-portfolio",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*", "apps/*"],
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "dev:shop": "npm run dev -w @ap/shop-bot",
+    "dev:web": "npm run dev -w @ap/web",
+    "dev:exam": "npm run dev -w @ap/exam-bot"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}
