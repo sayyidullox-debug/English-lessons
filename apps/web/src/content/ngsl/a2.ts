@@ -239,4 +239,82 @@ favorite|adjective|sevimli|Blue is my favorite color.
 newspaper|noun|gazeta|My father reads the newspaper.
 post|verb|pochta orqali yubormoq, joylamoq|I post a letter every week.
 ring|noun|uzuk, qo'ng'iroq|She wears a gold ring.
+wind|noun|shamol|The wind is strong today.
+blood|noun|qon|The doctor took some blood.
+warm|adjective|iliq|The water is warm.
+glass|noun|stakan, shisha|I drink a glass of water.
+radio|noun|radio|I listen to the radio in the car.
+heavy|adjective|og'ir|This bag is very heavy.
+farm|noun|ferma, dehqon xo'jaligi|My uncle has a farm.
+leg|noun|oyoq|My leg hurts.
+ship|noun|kema|The ship leaves at noon.
+horse|noun|ot|He rides a horse.
+taxi|noun|taksi|Let us take a taxi.
+pain|noun|og'riq|I have a pain in my back.
+cool|adjective|salqin, ajoyib|The evening is cool.
+wave|noun|to'lqin|The waves are high today.
+library|noun|kutubxona|I borrow books from the library.
+camp|noun|lager|The children are at summer camp.
+lift|verb|ko'tarmoq|Can you lift this box?
+email|noun|elektron pochta|I send an email every day.
+ball|noun|to'p|The children play with a ball.
+cry|verb|yig'lamoq|The baby will cry if she is hungry.
+photo|noun|surat, foto|Take a photo of us.
+map|noun|xarita|Look at the map.
+island|noun|orol|We visited a small island.
+football|noun|futbol|They play football on Sundays.
+left|adjective|chap|Turn left at the corner.
+bag|noun|sumka, xalta|My bag is on the chair.
+plane|noun|samolyot|The plane lands at ten.
+lady|noun|xonim, ayol|That lady is my teacher.
+boat|noun|qayiq, kema|We crossed the lake by boat.
+fresh|adjective|yangi, toza|I buy fresh bread every morning.
+nurse|noun|hamshira|The nurse is very kind.
+jump|verb|sakramoq|The children jump on the bed.
+pool|noun|basseyn|We swim in the pool.
+cash|noun|naqd pul|I pay in cash.
+strange|adjective|g'alati|I heard a strange noise.
+sun|noun|quyosh|The sun is hot today.
+glad|adjective|xursand|I am glad to see you.
+stone|noun|tosh|He threw a stone into the river.
+hate|verb|yomon ko'rmoq|I hate waiting.
+wine|noun|vino, may|He does not drink wine.
+camera|noun|kamera, fotoapparat|I bought a new camera.
+swim|verb|suzmoq|I swim every Saturday.
+coffee|noun|qahva|I drink coffee in the morning.
+museum|noun|muzey|We visited the museum yesterday.
+visitor|noun|mehmon, tashrif buyuruvchi|The museum has many visitors.
+dear|adjective|aziz, qadrli|Dear Ali, thank you for your letter.
+tonight|adverb|bugun kechqurun|What are you doing tonight?
+hurt|verb|og'itmoq, og'riqli bo'lmoq|My head hurts.
+gift|noun|sovg'a|This is a gift for you.
+guest|noun|mehmon|We have guests tonight.
+climb|verb|ko'tarilmoq, chiqmoq|We climb the mountain.
+mouth|noun|og'iz|Open your mouth, please.
+noise|noun|shovqin|The noise is very loud.
+square|noun|maydon, kvadrat|We met in the main square.
+gold|noun|oltin|The ring is made of gold.
+wood|noun|yog'och, o'rmon|The table is made of wood.
+skin|noun|teri|She has soft skin.
+shoe|noun|oyoq kiyim, tufli|I need new shoes.
+hall|noun|zal, dahliz|The party is in the hall.
+cup|noun|piyola, chashka|I drink a cup of tea.
+beach|noun|plyaj, sohil|We play on the beach.
+afraid|adjective|qo'rqqan|I am afraid of dogs.
+quiet|adjective|jim, tinch|The street is quiet at night.
+twice|adverb|ikki marta|I call my mother twice a week.
+dry|adjective|quruq|The clothes are dry.
+excellent|adjective|a'lo, ajoyib|Your English is excellent.
+wonderful|adjective|ajoyib, zo'r|We had a wonderful day.
+funny|adjective|kulgili, qiziq|He told a funny story.
+meal|noun|taom, ovqat|Dinner is my favorite meal.
+farmer|noun|dehqon, fermer|The farmer works in the field.
+south|noun|janub|The village is in the south.
+north|noun|shimol|It is cold in the north.
+lesson|noun|dars|Today we have a long lesson.
+speed|noun|tezlik|The speed of the car is high.
+corner|noun|burchak|The shop is on the corner.
+crowd|noun|olomon|A large crowd gathered in the square.
+fan|noun|muxlis, ventilyator|He is a football fan.
+sentence|noun|gap, hukm|Write a sentence with this word.
 `;
