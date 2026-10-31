@@ -11,6 +11,7 @@ import {
   type SpeakingPart,
   type SpeakingPrompt,
 } from "@/content/speaking";
+import { LEVELS, LEVEL_LABEL } from "@/content/vocab";
 import { formatBand } from "@/lib/band";
 import { recordSpeaking } from "@/lib/progress";
 import { analyseSpeech, type SpeechResult } from "@/lib/speaking-analysis";
@@ -399,22 +400,39 @@ function SpeechResultView({ result, text }: { result: SpeechResult; text: string
   );
 }
 
+/** Savollarni daraja bo'yicha guruhlaydi; IELTS darajasi esa Part 1/2/3 ga bo'linadi. */
+function speakingGroups(): Array<{ label: string; prompts: SpeakingPrompt[] }> {
+  const groups: Array<{ label: string; prompts: SpeakingPrompt[] }> = [];
+  for (const level of LEVELS) {
+    if (level === "IELTS") {
+      for (const part of [1, 2, 3] as const satisfies readonly SpeakingPart[]) {
+        const prompts = SPEAKING_PROMPTS.filter((p) => p.level === "IELTS" && p.part === part);
+        if (prompts.length > 0) groups.push({ label: `IELTS ${PART_LABEL[part]}`, prompts });
+      }
+    } else {
+      const prompts = SPEAKING_PROMPTS.filter((p) => p.level === level);
+      if (prompts.length > 0) groups.push({ label: `${level}, ${LEVEL_LABEL[level].toLowerCase()}`, prompts });
+    }
+  }
+  return groups;
+}
+
 export function SpeakingLab() {
   const [promptId, setPromptId] = useState(SPEAKING_PROMPTS[0]?.id ?? "");
   const hydrated = useHydrated();
   const prompt = SPEAKING_PROMPTS.find((p) => p.id === promptId) ?? SPEAKING_PROMPTS[0];
-  const parts = [1, 2, 3] as const satisfies readonly SpeakingPart[];
+  const groups = speakingGroups();
 
   return (
     <div className="grid gap-10 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-14">
       <fieldset>
         <legend className="text-sm font-medium text-muted-foreground">Savol</legend>
         <div className="mt-3 space-y-5">
-          {parts.map((part) => (
-            <div key={part}>
-              <p className="text-sm font-semibold">{PART_LABEL[part]}</p>
+          {groups.map(({ label, prompts }) => (
+            <div key={label}>
+              <p className="text-sm font-semibold">{label}</p>
               <ul className="mt-1 divide-y divide-border border-y border-border">
-                {SPEAKING_PROMPTS.filter((p) => p.part === part).map((p) => (
+                {prompts.map((p) => (
                   <li key={p.id}>
                     <label className="block cursor-pointer">
                       <input

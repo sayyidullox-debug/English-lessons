@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { GRAMMAR, TOPIC_LABEL, type GrammarQuestion, type GrammarTopic } from "@/content/grammar";
+import { LEVELS, type Level } from "@/content/vocab";
 import { dayNumber } from "@/lib/srs";
 import { recordGrammar } from "@/lib/progress";
 import { shuffle, shuffleChoices } from "@/lib/shuffle";
@@ -29,15 +30,36 @@ function prepare(pool: readonly GrammarQuestion[]): PreparedQuestion[] {
 
 export function GrammarQuiz() {
   const [filter, setFilter] = useState<Filter>("all");
+  const [level, setLevel] = useState<Level | "all">("all");
   const [run, setRun] = useState<PreparedQuestion[] | null>(null);
 
   if (run) return <Run questions={run} onExit={() => setRun(null)} />;
 
-  const pool = filter === "all" ? GRAMMAR : GRAMMAR.filter((q) => q.topic === filter);
+  const pool = GRAMMAR.filter((q) => (filter === "all" || q.topic === filter) && (level === "all" || q.level === level));
   const count = Math.min(RUN_SIZE, pool.length);
 
   return (
     <div>
+      <fieldset className="mb-6">
+        <legend className="text-sm font-medium text-muted-foreground">Daraja</legend>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {(["all", ...LEVELS] as Array<Level | "all">).map((l) => (
+            <label key={l} className="cursor-pointer">
+              <input
+                type="radio"
+                name="daraja"
+                value={l}
+                checked={level === l}
+                onChange={() => setLevel(l)}
+                className="peer sr-only"
+              />
+              <span className="inline-block rounded-md border border-border bg-card px-3 py-2 text-sm font-medium transition-colors peer-checked:border-foreground peer-checked:bg-marker peer-checked:text-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-samarkand">
+                {l === "all" ? "Hammasi" : `${l} (${GRAMMAR.filter((q) => q.level === l).length})`}
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <fieldset>
         <legend className="text-sm font-medium text-muted-foreground">Mavzu</legend>
         <div className="mt-3 flex flex-wrap gap-2">
@@ -61,9 +83,13 @@ export function GrammarQuiz() {
       <Button
         className="mt-8 h-11 px-5 text-base"
         onClick={() => setRun(prepare(pool))}
+        disabled={pool.length === 0}
       >
         Boshlash ({count} ta savol)
       </Button>
+      {pool.length === 0 && (
+        <p className="mt-2 text-sm text-muted-foreground">Bu daraja va mavzuda savol yo&apos;q. Boshqasini tanlang.</p>
+      )}
     </div>
   );
 }

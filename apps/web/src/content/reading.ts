@@ -1,3 +1,5 @@
+import type { Level } from "./vocab";
+
 export type TfngAnswer = "true" | "false" | "not-given";
 
 export type ReadingQuestion =
@@ -6,6 +8,7 @@ export type ReadingQuestion =
 
 export interface ReadingPassage {
   id: string;
+  level: Level;
   title: string;
   minutes: number;
   paragraphs: string[];
@@ -14,7 +17,142 @@ export interface ReadingPassage {
 
 export const PASSAGES: ReadingPassage[] = [
   {
+    id: "day-at-the-market",
+    level: "A2",
+    title: "A Day at the Market",
+    minutes: 6,
+    paragraphs: [
+      "Every Saturday, Dilnoza goes to the market with her mother. They leave home at eight o'clock because the market is busy after ten.",
+      "First, they buy vegetables. Her mother likes tomatoes and carrots, but Dilnoza prefers cucumbers. Then they buy fresh bread from a small shop near the gate.",
+      "At lunchtime, they are tired and hungry. They sit in a small cafe and eat plov. Dilnoza drinks green tea, and her mother drinks a cup of coffee.",
+      "After lunch, they walk home. Dilnoza carries the bread, and her mother carries the heavy bags. In the afternoon, Dilnoza helps to cook dinner. She loves Saturdays.",
+    ],
+    questions: [
+      {
+        id: "m1",
+        kind: "tfng",
+        statement: "Dilnoza goes to the market every Sunday.",
+        answer: "false",
+        evidence: "1-abzats: 'Every Saturday', ya'ni shanba kuni.",
+      },
+      {
+        id: "m2",
+        kind: "tfng",
+        statement: "They leave home early because the market is busy after ten o'clock.",
+        answer: "true",
+        evidence: "1-abzats: 'They leave home at eight o'clock because the market is busy after ten'.",
+      },
+      {
+        id: "m3",
+        kind: "tfng",
+        statement: "Dilnoza's mother likes cucumbers best.",
+        answer: "false",
+        evidence: "2-abzats: onasi pomidor va sabzini yaxshi ko'radi, bodringni Dilnoza afzal ko'radi.",
+      },
+      {
+        id: "m4",
+        kind: "tfng",
+        statement: "They eat lunch in a cafe.",
+        answer: "true",
+        evidence: "3-abzats: 'They sit in a small cafe and eat plov'.",
+      },
+      {
+        id: "m5",
+        kind: "tfng",
+        statement: "Dilnoza's father stays at home on Saturdays.",
+        answer: "not-given",
+        evidence: "Matnda otasi haqida gap yo'q: ma'lumot berilmagan.",
+      },
+      {
+        id: "m6",
+        kind: "choice",
+        statement: "Who carries the heavy bags?",
+        options: ["Dilnoza", "Her mother", "Her father", "The shopkeeper"],
+        answer: 1,
+        evidence: "4-abzats: 'her mother carries the heavy bags'.",
+      },
+      {
+        id: "m7",
+        kind: "choice",
+        statement: "What does Dilnoza drink at lunch?",
+        options: ["Coffee", "Green tea", "Milk", "Water"],
+        answer: 1,
+        evidence: "3-abzats: 'Dilnoza drinks green tea'.",
+      },
+    ],
+  },
+  {
+    id: "why-we-need-sleep",
+    level: "B1",
+    title: "Why We Need Sleep",
+    minutes: 9,
+    paragraphs: [
+      "Many people think that sleep is simply a time when the body rests. Scientists now know that this is not true. While we sleep, the brain is busy sorting the information it received during the day.",
+      "In one experiment, students learned a list of words in the evening. Half of them slept for eight hours, and the others stayed awake all night. The next day, the students who had slept remembered far more words than those who had not.",
+      "Lack of sleep also affects our mood and health. People who sleep less than six hours a night are more likely to feel anxious, and they catch colds more often. Some studies suggest that they may also gain weight more easily, although researchers are still investigating the reasons.",
+      "Experts give simple advice to help people sleep well. They recommend going to bed at the same time every night, avoiding coffee in the afternoon, and turning off phones an hour before sleep. The light from screens, they explain, tells the brain that it is still daytime.",
+    ],
+    questions: [
+      {
+        id: "s1",
+        kind: "tfng",
+        statement: "Scientists believe the brain is inactive during sleep.",
+        answer: "false",
+        evidence: "1-abzats: miya uyqu paytida 'busy sorting the information'.",
+      },
+      {
+        id: "s2",
+        kind: "tfng",
+        statement: "In the experiment, all the students stayed awake all night.",
+        answer: "false",
+        evidence: "2-abzats: talabalarning yarmi sakkiz soat uxlagan.",
+      },
+      {
+        id: "s3",
+        kind: "tfng",
+        statement: "The students who slept remembered more words the next day.",
+        answer: "true",
+        evidence: "2-abzats: uxlaganlar 'far more words' eslab qolgan.",
+      },
+      {
+        id: "s4",
+        kind: "tfng",
+        statement: "People who sleep less than six hours catch colds more often.",
+        answer: "true",
+        evidence: "3-abzats: 'they catch colds more often'.",
+      },
+      {
+        id: "s5",
+        kind: "tfng",
+        statement: "Researchers have proved that lack of sleep causes weight gain.",
+        answer: "false",
+        evidence: "3-abzats: faqat 'suggest ... may', sabablar hali o'rganilmoqda.",
+      },
+      {
+        id: "s6",
+        kind: "tfng",
+        statement: "Drinking coffee in the morning is bad for sleep.",
+        answer: "not-given",
+        evidence: "Matnda faqat tushdan keyingi qahva eslatilgan, ertalabki haqida gap yo'q.",
+      },
+      {
+        id: "s7",
+        kind: "choice",
+        statement: "Why should people turn off their phones before sleep?",
+        options: [
+          "The light tells the brain that it is still daytime",
+          "Phones are very expensive",
+          "Phones make too much noise at night",
+          "The battery may explode",
+        ],
+        answer: 0,
+        evidence: "4-abzats: ekran nuri miyaga hali kunduz deb xabar beradi.",
+      },
+    ],
+  },
+  {
     id: "farming-without-fields",
+    level: "IELTS",
     title: "Farming Without Fields",
     minutes: 12,
     paragraphs: [
@@ -92,6 +230,7 @@ export const PASSAGES: ReadingPassage[] = [
   },
   {
     id: "four-day-week",
+    level: "IELTS",
     title: "The Four-Day Week",
     minutes: 12,
     paragraphs: [

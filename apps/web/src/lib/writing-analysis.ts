@@ -271,26 +271,46 @@ export function measure(essay: string): EssayStats {
 
 const clamp = (value: number) => Math.min(7, Math.max(3.5, roundBand(value)));
 
-export function estimateBands(stats: EssayStats, issueCount: number): Feedback["bands"] {
-  let task = stats.words >= 250 ? 6.5 : stats.words >= 200 ? 6 : stats.words >= 150 ? 5 : 4;
-  if (stats.hasConclusion) task += 0.5;
-  if (stats.paragraphs >= 4) task += 0.5;
+/**
+ * `minWords` mashq darajasiga bog'liq: A1 uchun 30, IELTS Task 2 uchun 250.
+ * Qisqa matnlarda abzats va xulosa talab qilinmaydi.
+ */
+export function estimateBands(stats: EssayStats, issueCount: number, minWords = 250): Feedback["bands"] {
+  const ratio = minWords <= 0 ? 1 : stats.words / minWords;
+  const isEssay = minWords >= 200;
+
+  let task = ratio >= 1 ? 6.5 : ratio >= 0.8 ? 6 : ratio >= 0.6 ? 5 : 4;
+  if (minWords >= 150 && stats.hasConclusion) task += 0.5;
+  if (isEssay && stats.paragraphs >= 4) task += 0.5;
 
   const linkerCount = stats.linkers.length;
-  let coherence = linkerCount >= 7 ? 7 : linkerCount >= 5 ? 6.5 : linkerCount >= 3 ? 6 : linkerCount >= 1 ? 5.5 : 4.5;
-  if (stats.paragraphs < 3) coherence -= 1;
+  let coherence =
+    minWords < 100
+      ? ratio >= 1
+        ? 6
+        : 5
+      : linkerCount >= 7
+        ? 7
+        : linkerCount >= 5
+          ? 6.5
+          : linkerCount >= 3
+            ? 6
+            : linkerCount >= 1
+              ? 5.5
+              : 4.5;
+  if (isEssay && stats.paragraphs < 3) coherence -= 1;
 
   const d = stats.lexicalDiversity;
   let lexical = d >= 0.65 ? 7 : d >= 0.55 ? 6.5 : d >= 0.47 ? 6 : d >= 0.4 ? 5.5 : 5;
 
-  // Qisqa inshoda so'z xilma-xilligi va bog'lanish haqida ishonchli xulosa qilib bo'lmaydi
-  const lengthCap = stats.words < 150 ? 5.5 : stats.words < 250 ? 6.5 : 7;
+  // Qisqa matnda so'z xilma-xilligi va bog'lanish haqida ishonchli xulosa qilib bo'lmaydi
+  const lengthCap = ratio < 0.6 ? 5.5 : ratio < 1 ? 6.5 : 7;
   coherence = Math.min(coherence, lengthCap);
   lexical = Math.min(lexical, lengthCap);
 
   const per100 = stats.words === 0 ? 0 : (issueCount / stats.words) * 100;
   let grammar = per100 === 0 ? 7 : per100 <= 1 ? 6.5 : per100 <= 2 ? 6 : per100 <= 4 ? 5.5 : 5;
-  if (stats.avgSentenceLength < 10) grammar -= 0.5;
+  if (minWords >= 150 && stats.avgSentenceLength < 10) grammar -= 0.5;
 
   return {
     task: clamp(task),
@@ -300,26 +320,33 @@ export function estimateBands(stats: EssayStats, issueCount: number): Feedback["
   };
 }
 
-export function demoFeedback(essay: string): Feedback {
+export function demoFeedback(essay: string, minWords = 250): Feedback {
   const stats = measure(essay);
   const annotations = findIssues(essay).slice(0, 14);
-  const bands = estimateBands(stats, annotations.length);
+  const bands = estimateBands(stats, annotations.length, minWords);
+  const isEssay = minWords >= 200;
 
   const strengths: string[] = [];
   const nextSteps: string[] = [];
 
-  if (stats.words >= 250) strengths.push("Hajm talabga mos: 250 so'zdan oshgan.");
-  else nextSteps.push(`Hozir ${stats.words} so'z. Task 2 uchun kamida 250 so'z yozing.`);
+  if (stats.words >= minWords) strengths.push(`Hajm talabga mos: ${minWords} so'zdan oshgan.`);
+  else nextSteps.push(`Hozir ${stats.words} so'z. Kamida ${minWords} so'z yozing.`);
 
-  if (stats.paragraphs >= 4) strengths.push("Insho abzatslarga bo'lingan: kirish, asosiy qism va xulosa ko'rinadi.");
-  else nextSteps.push("Inshoni kamida 4 abzatsga bo'ling: kirish, ikkita asosiy abzats, xulosa.");
+  if (isEssay) {
+    if (stats.paragraphs >= 4) strengths.push("Insho abzatslarga bo'lingan: kirish, asosiy qism va xulosa ko'rinadi.");
+    else nextSteps.push("Inshoni kamida 4 abzatsga bo'ling: kirish, ikkita asosiy abzats, xulosa.");
+  }
 
-  if (stats.linkers.length >= 4) strengths.push(`Bog'lovchilar yaxshi: ${stats.linkers.slice(0, 4).join(", ")}.`);
-  else nextSteps.push("Fikrlarni bog'lang: however, moreover, as a result kabi iboralardan foydalaning.");
+  if (minWords >= 100) {
+    if (stats.linkers.length >= 4) strengths.push(`Bog'lovchilar yaxshi: ${stats.linkers.slice(0, 4).join(", ")}.`);
+    else nextSteps.push("Fikrlarni bog'lang: however, moreover, as a result kabi iboralardan foydalaning.");
+  }
 
-  if (!stats.hasConclusion) nextSteps.push("Oxirida xulosa abzatsi qo'shing ('In conclusion, ...').");
-  if (annotations.length > 0) nextSteps.push("Qizil qalam bilan belgilangan xatolarni tuzatib, inshoni qayta tekshiring.");
-  if (stats.lexicalDiversity < 0.5) nextSteps.push("So'zlar takrorlanyapti. Sinonimlardan foydalaning (Lug'at bo'limidagi so'zlar yordam beradi).");
+  if (minWords >= 150 && !stats.hasConclusion) nextSteps.push("Oxirida xulosa abzatsi qo'shing ('In conclusion, ...').");
+  if (annotations.length > 0) nextSteps.push("Qizil qalam bilan belgilangan xatolarni tuzatib, qayta tekshiring.");
+  if (stats.lexicalDiversity < 0.5 && stats.words >= 40) {
+    nextSteps.push("So'zlar takrorlanyapti. Sinonimlardan foydalaning (Lug'at bo'limidagi so'zlar yordam beradi).");
+  }
 
   const summary =
     annotations.length === 0

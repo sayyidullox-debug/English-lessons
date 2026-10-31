@@ -4,11 +4,19 @@ import { buttonVariants } from "@/components/ui/button";
 import { GRAMMAR } from "@/content/grammar";
 import { PASSAGES } from "@/content/reading";
 import { SPEAKING_PROMPTS } from "@/content/speaking";
-import { VOCAB } from "@/content/vocab";
+import { LEVELS, LEVEL_LABEL, VOCAB, wordsOfLevel, type Level } from "@/content/vocab";
 import { WRITING_PROMPTS } from "@/content/writing";
 import { cn } from "@/lib/utils";
 
 const SAMPLE_MARKS = 4;
+
+const LEVEL_GOAL: Record<Level, string> = {
+  A1: "Salomlashish, o'zingiz va oilangiz haqida oddiy gaplar.",
+  A2: "Kundalik mavzular: ovqat, xarid, ob-havo, o'tgan kun haqida gapirish.",
+  B1: "Fikringizni bildirish, xat yozish, sayohatda va ishda tushunish.",
+  B2: "Murakkab matnlarni tushunish, munozarada ishtirok etish.",
+  IELTS: "Akademik so'zlar, Task 2 inshosi va to'liq imtihon formatidagi matnlar.",
+};
 
 const SECTIONS = [
   {
@@ -75,19 +83,19 @@ export default function HomePage() {
             Inshongizni imtihonchi qalami bilan ko&apos;ring
           </h1>
           <p className="mt-6 max-w-[52ch] text-lg leading-relaxed text-muted-foreground">
-            IELTS uchun lug&apos;at, grammatika, o&apos;qish, gapirish va yozish mashqlari. Yozgan inshongizdagi har
-            bir xato qizil qalam bilan belgilanadi, yoniga tuzatishi va sababi yoziladi. Hammasi bepul,
-            ro&apos;yxatdan o&apos;tish shart emas.
+            Ingliz tilini noldan boshlab IELTS darajasigacha o&apos;rganing: lug&apos;at, grammatika, o&apos;qish, gapirish va
+            yozish mashqlari. Yozgan joyingizdagi har bir xato qizil qalam bilan belgilanadi, yoniga tuzatishi va
+            sababi yoziladi. Hammasi bepul, ro&apos;yxatdan o&apos;tish shart emas.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/writing" className={cn(buttonVariants({ size: "lg" }), "h-11 px-5 text-base")}>
-              Inshoni tekshirtirish
+            <Link href="/vocabulary" className={cn(buttonVariants({ size: "lg" }), "h-11 px-5 text-base")}>
+              Lug&apos;atdan boshlash
             </Link>
             <Link
-              href="/vocabulary"
+              href="/writing"
               className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-11 px-5 text-base")}
             >
-              Lug&apos;atdan boshlash
+              Yozganimni tekshirtirish
             </Link>
           </div>
         </div>
@@ -127,6 +135,30 @@ export default function HomePage() {
               <p className="text-pen">{SAMPLE_MARKS} ta joy belgilandi. Sichqoncha yoki Tab bilan sababini ko&apos;ring.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="yol" className="border-t border-border/80">
+        <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+          <h2 id="yol" className="max-w-[34ch] text-3xl font-bold tracking-tight text-balance">
+            Noldan IELTS gacha besh bosqich
+          </h2>
+          <p className="mt-3 max-w-[60ch] text-muted-foreground">
+            Har bosqichda lug&apos;at, grammatika, o&apos;qish, gapirish va yozish mashqlari bor. Oldingi bosqichning ko&apos;pini
+            o&apos;zlashtirgach keyingisiga o&apos;ting, lug&apos;at sahifasi o&apos;zi darajangizni tavsiya qiladi.
+          </p>
+          <ol className="mt-8 grid gap-y-8 border-t border-foreground sm:grid-cols-2 lg:grid-cols-5">
+            {LEVELS.map((level) => (
+              <li key={level} className="pt-4 lg:pr-6">
+                <p className="font-serif text-4xl font-semibold italic text-pen">{level}</p>
+                <p className="mt-1 font-semibold">{LEVEL_LABEL[level]}</p>
+                <p className="mt-2 max-w-[28ch] text-sm leading-relaxed text-muted-foreground">{LEVEL_GOAL[level]}</p>
+                <p className="mt-3 text-sm font-medium tabular-nums text-samarkand">
+                  {wordsOfLevel(level).length} so&apos;z, {GRAMMAR.filter((q) => q.level === level).length} savol
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 

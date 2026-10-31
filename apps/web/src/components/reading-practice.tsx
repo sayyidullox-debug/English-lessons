@@ -71,6 +71,7 @@ export function ReadingPractice({ passages }: { passages: ReadingPassage[] }) {
                   className="peer sr-only"
                 />
                 <span className="inline-block rounded-md border border-border bg-card px-3 py-2 text-sm font-medium transition-colors peer-checked:border-foreground peer-checked:bg-marker peer-checked:text-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-samarkand">
+                  <span className="mr-1.5 text-xs font-semibold text-samarkand">{p.level}</span>
                   {p.title}
                 </span>
               </label>

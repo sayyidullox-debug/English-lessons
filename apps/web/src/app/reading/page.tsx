@@ -12,8 +12,8 @@ export default function ReadingPage() {
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <h1 className="text-4xl font-bold tracking-tight">O&apos;qish</h1>
       <p className="mt-3 max-w-[58ch] text-muted-foreground">
-        Matnni o&apos;qib, savollarga javob bering. Tavsiya etilgan vaqt: 12 daqiqa. Natijadan keyin har bir javobning
-        matndagi dalili ko&apos;rsatiladi. Savollar har safar boshqa tartibda chiqadi.
+        Oson matndan (A2) boshlab IELTS darajasigacha. Matnni o&apos;qib, savollarga javob bering. Natijadan keyin har
+        bir javobning matndagi dalili ko&apos;rsatiladi. Savollar har safar boshqa tartibda chiqadi.
       </p>
       <div className="mt-10">
         <ReadingPractice passages={PASSAGES} />

@@ -30,6 +30,8 @@ export type FeedbackAnnotation = Feedback["annotations"][number];
 export const feedbackRequestSchema = z.object({
   prompt: z.string().min(10).max(600),
   essay: z.string().min(1).max(6000),
+  /** Mashq darajasiga qarab talab qilinadigan eng kam so'z soni. */
+  minWords: z.number().int().min(10).max(400).optional(),
 });
 
 export interface Segment {

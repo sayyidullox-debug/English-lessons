@@ -50,11 +50,11 @@ export async function POST(request: Request): Promise<Response> {
   if (!parsed.success) {
     return Response.json({ error: "Insho yoki mavzu noto'g'ri (6000 belgigacha)" }, { status: 400 });
   }
-  const { prompt, essay } = parsed.data;
+  const { prompt, essay, minWords = 250 } = parsed.data;
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    return Response.json({ mode: "demo", feedback: demoFeedback(essay) });
+    return Response.json({ mode: "demo", feedback: demoFeedback(essay, minWords) });
   }
 
   const client = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
@@ -66,13 +66,13 @@ export async function POST(request: Request): Promise<Response> {
     const ai = new ClaudeProvider({ apiKey, model: process.env.AI_MODEL });
     const feedback = await ai.completeJson({
       system: SYSTEM,
-      prompt: `Essay question:\n${prompt}\n\n<essay>\n${essay}\n</essay>`,
+      prompt: `Task:\n${prompt}\n\nExpected minimum length: ${minWords} words. If the task is short and simple, judge it by what is realistic for a learner at that level.\n\n<essay>\n${essay}\n</essay>`,
       schema: feedbackSchema,
       maxTokens: 2500,
     });
     return Response.json({ mode: "ai", feedback });
   } catch (error) {
     console.error("writing-feedback: AI xatosi, demo rejimga o'tildi", error);
-    return Response.json({ mode: "demo", feedback: demoFeedback(essay) });
+    return Response.json({ mode: "demo", feedback: demoFeedback(essay, minWords) });
   }
 }

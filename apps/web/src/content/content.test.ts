@@ -59,6 +59,28 @@ describe("kontent butunligi", () => {
     }
   });
 
+  it("grammatika, o'qish, gapirish, yozish: har bir darajada kamida bitta mashq bor", () => {
+    for (const level of LEVELS) {
+      expect(GRAMMAR.filter((q) => q.level === level).length, `grammatika ${level}`).toBeGreaterThanOrEqual(4);
+      expect(SPEAKING_PROMPTS.some((p) => p.level === level) || level === "B2", `gapirish ${level}`).toBe(true);
+    }
+    // O'qish va yozishda B2 alohida emas, IELTS bilan birga
+    for (const level of ["A2", "B1", "IELTS"] as const) {
+      expect(PASSAGES.some((p) => p.level === level), `o'qish ${level}`).toBe(true);
+    }
+    for (const level of ["A1", "A2", "B1", "IELTS"] as const) {
+      expect(WRITING_PROMPTS.some((p) => p.level === level), `yozish ${level}`).toBe(true);
+    }
+  });
+
+  it("yozish: so'z talabi daraja oshgani sari kamaymaydi", () => {
+    const order = ["A1", "A2", "B1", "B2", "IELTS"];
+    const sorted = [...WRITING_PROMPTS].sort((a, b) => order.indexOf(a.level) - order.indexOf(b.level));
+    for (let i = 1; i < sorted.length; i++) {
+      expect(sorted[i]!.minWords, sorted[i]!.id).toBeGreaterThanOrEqual(sorted[i - 1]!.minWords);
+    }
+  });
+
   it("yozish va gapirish: id'lar noyob, savollar bo'sh emas", () => {
     expect(unique(WRITING_PROMPTS.map((p) => p.id))).toBe(true);
     expect(unique(SPEAKING_PROMPTS.map((p) => p.id))).toBe(true);

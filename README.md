@@ -1,6 +1,6 @@
 # Qizil Qalam
 
-IELTS inglizcha tayyorgarlik sayti o'zbek o'quvchilari uchun. Interfeys o'zbekcha, mashqlar inglizcha. Insho va gapirgan javob imtihonchi ko'zi bilan tekshiriladi: xatolar qizil qalam bilan chiziladi, yoniga tuzatish va sababi yoziladi.
+Ingliz tilini noldan IELTS gacha o'rgatadigan sayt o'zbek o'quvchilari uchun. Interfeys o'zbekcha, mashqlar inglizcha. Insho va gapirgan javob imtihonchi ko'zi bilan tekshiriladi: xatolar qizil qalam bilan chiziladi, yoniga tuzatish va sababi yoziladi.
 
 **Hammasi bepul.** Hisob, to'lov va API kaliti kerak emas. AI tekshiruvi faqat ixtiyoriy qo'shimcha.
 
@@ -8,11 +8,11 @@ IELTS inglizcha tayyorgarlik sayti o'zbek o'quvchilari uchun. Interfeys o'zbekch
 
 | Bo'lim | Nima qiladi |
 | --- | --- |
-| Lug'at | 36 ta akademik so'z. Leitner takrorlash tizimi: bilmagan so'z bugun, bilgani kunlar o'tib qaytadi. Talaffuzni tinglash, klaviatura (1/2/3). |
-| Grammatika | 38 savollik bankadan har urinishda 12 tasi tasodifiy tanlanadi, variantlar aralashadi. 6 mavzu, har javobga o'zbekcha tushuntirish. |
-| O'qish | 2 ta matn, IELTS formatida: True / False / Not Given va tanlov. Savollar va variantlar har urinishda aralashadi. Taymer, har javobning dalili, taxminiy band. |
-| Gapirish | Part 1, 2, 3 savollari. Brauzer ovozni matnga aylantiradi (Chrome / Edge), tezlik, to'ldiruvchi so'zlar, so'z boyligi va xatolar baholanadi. Part 2 uchun tayyorlanish taymeri. |
-| Yozish | Task 2 mavzulari. To'rt mezon bo'yicha ball, qizil qalamli insho, imlo va odatiy xatolar. Qoralama avtomatik saqlanadi. |
+| Lug'at | 299 ta so'z, 5 daraja: A1, A2, B1, B2, IELTS. Tarjimani o'zingiz yozasiz, sayt tekshiradi: lotin va kirill, bir nechta to'g'ri tarjima, imlo xatosini kechirish. Ikki yo'nalish (inglizcha → o'zbekcha va teskari). Leitner takrorlash tizimi, talaffuzni tinglash, darajangizni tavsiya qilish. |
+| Grammatika | 58 savol, 5 daraja, 6 mavzu. Har urinishda 12 tasi tasodifiy tanlanadi, variantlar aralashadi. Har javobga o'zbekcha tushuntirish. |
+| O'qish | 4 ta matn (A2, B1 va 2 ta IELTS), True / False / Not Given va tanlov savollari. Savollar va variantlar har urinishda aralashadi. Taymer, har javobning dalili, taxminiy band. |
+| Gapirish | 15 ta savol: A1 dan IELTS Part 1, 2, 3 gacha. Brauzer ovozni matnga aylantiradi (Chrome / Edge), tezlik, to'ldiruvchi so'zlar, so'z boyligi va xatolar baholanadi. |
+| Yozish | 11 ta topshiriq: A1 da 5-6 gap, B1 da email, IELTS da Task 2 inshosi. So'z talabi darajaga qarab o'zgaradi. Imlo va odatiy xatolar qizil qalamda. Qoralama avtomatik saqlanadi. |
 | Natijalar | Ketma-ket kunlar, o'zlashtirilgan so'zlar, mavzu bo'yicha aniqlik, ball dinamikasi. |
 
 ## Ishga tushirish
@@ -55,5 +55,6 @@ Muhim qarorlar:
 
 - Ballar taxminiy. Rasmiy IELTS natijasini bildirmaydi.
 - Speaking: talaffuz baholanmaydi. Chrome ko'pincha um/uh kabi so'zlarni yozmaydi, shuning uchun ularning soni kam chiqishi mumkin. Firefox va Safari ovoz tanishni to'liq qo'llamaydi, u yerda javobni yozib tekshirtirsa bo'ladi.
-- Kontent hajmi hali kichik (2 matn, 38 savol, 36 so'z). Yangisini `src/content` ga qo'shish kifoya.
+- Kontent hajmi hali cheklangan (299 so'z, 58 grammatika savoli, 4 matn). Yangisini `src/content` ga qo'shish kifoya, testlar mazmun butunligini o'zi tekshiradi.
+- Lug'at tarjimalarini yozishda ehtiyot bo'ldim, lekin ona tilida so'zlashuvchi o'qituvchi tekshirib chiqsa yaxshi bo'ladi.
 - Tezlik chegarasi (AI yo'li uchun) bitta server jarayoni xotirasida.

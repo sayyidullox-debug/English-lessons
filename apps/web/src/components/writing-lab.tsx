@@ -5,7 +5,7 @@ import { AnnotatedEssay } from "@/components/correction";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { MIN_WORDS, WRITING_PROMPTS, type WritingPrompt } from "@/content/writing";
+import { WRITING_PROMPTS, type WritingPrompt } from "@/content/writing";
 import { formatBand, overallBand } from "@/lib/band";
 import type { Feedback } from "@/lib/feedback";
 import { recordEssay } from "@/lib/progress";
@@ -17,6 +17,7 @@ interface Result {
   mode: "ai" | "demo";
   feedback: Feedback;
   essay: string;
+  minWords: number;
 }
 
 const CRITERIA: Array<{ key: keyof Feedback["bands"]; label: string }> = [
@@ -59,7 +60,9 @@ function Editor({ prompt }: { prompt: WritingPrompt }) {
   };
 
   const words = countWords(essay);
-  const progress = Math.min(100, Math.round((words / MIN_WORDS) * 100));
+  const minWords = prompt.minWords;
+  const checkFrom = Math.min(20, Math.ceil(minWords / 2));
+  const progress = Math.min(100, Math.round((words / minWords) * 100));
 
   const submit = async () => {
     setStatus("loading");
@@ -68,14 +71,14 @@ function Editor({ prompt }: { prompt: WritingPrompt }) {
       const response = await fetch("/api/writing-feedback", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ prompt: prompt.question, essay }),
+        body: JSON.stringify({ prompt: prompt.question, essay, minWords }),
       });
       const body = (await response.json()) as { mode?: "ai" | "demo"; feedback?: Feedback; error?: string };
       if (!response.ok || !body.feedback || !body.mode) {
         throw new Error(body.error ?? "Tekshiruv amalga oshmadi");
       }
       const { feedback, mode } = body;
-      setResult({ mode, feedback, essay });
+      setResult({ mode, feedback, essay, minWords });
       setStatus("idle");
       updateProgress((data) =>
         recordEssay(
@@ -117,22 +120,22 @@ function Editor({ prompt }: { prompt: WritingPrompt }) {
         <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-3">
           <div className="min-w-48 flex-1">
             <div className="flex justify-between text-sm">
-              <span className={cn("tabular-nums", words >= MIN_WORDS ? "text-samarkand" : "text-muted-foreground")}>
-                {words} / {MIN_WORDS} so&apos;z
+              <span className={cn("tabular-nums", words >= minWords ? "text-samarkand" : "text-muted-foreground")}>
+                {words} / {minWords} so&apos;z
               </span>
             </div>
             <div className="mt-1 h-1 rounded-full bg-muted" role="presentation">
               <div
-                className={cn("h-full rounded-full transition-all", words >= MIN_WORDS ? "bg-samarkand" : "bg-foreground/60")}
+                className={cn("h-full rounded-full transition-all", words >= minWords ? "bg-samarkand" : "bg-foreground/60")}
                 style={{ width: `${progress}%` }}
               />
             </div>
           </div>
-          <Button className="h-11 px-5 text-base" onClick={submit} disabled={words < 20 || status === "loading"}>
+          <Button className="h-11 px-5 text-base" onClick={submit} disabled={words < checkFrom || status === "loading"}>
             {status === "loading" ? "Tekshirilmoqda..." : "Qizil qalam bilan tekshirish"}
           </Button>
         </div>
-        {words < 20 && <p className="mt-2 text-sm text-muted-foreground">Tekshirish uchun kamida 20 so&apos;z yozing.</p>}
+        {words < checkFrom && <p className="mt-2 text-sm text-muted-foreground">Tekshirish uchun kamida {checkFrom} so&apos;z yozing.</p>}
         {status === "error" && (
           <p role="alert" className="mt-3 text-pen">
             {error}. Qayta urinib ko&apos;ring.
@@ -167,7 +170,9 @@ export function WritingLab() {
                 />
                 <span className="block px-3 py-3 transition-colors hover:bg-muted peer-checked:bg-marker/60 peer-focus-visible:outline-2 peer-focus-visible:-outline-offset-2 peer-focus-visible:outline-samarkand">
                   <span className="block font-semibold">{p.topic}</span>
-                  <span className="block text-sm text-muted-foreground">{p.type}</span>
+                  <span className="block text-sm text-muted-foreground">
+                    <span className="font-semibold text-samarkand">{p.level}</span> · {p.type}
+                  </span>
                 </span>
               </label>
             </li>
@@ -183,7 +188,7 @@ export function WritingLab() {
 }
 
 function ResultView({ result }: { result: Result }) {
-  const { feedback, mode, essay } = result;
+  const { feedback, mode, essay, minWords } = result;
   const overall = overallBand(Object.values(feedback.bands));
 
   return (
@@ -200,6 +205,12 @@ function ResultView({ result }: { result: Result }) {
         </Badge>
       </div>
       <p className="mt-5 max-w-[62ch] leading-relaxed">{feedback.summary}</p>
+      {minWords < 200 && (
+        <p className="mt-3 max-w-[62ch] text-sm text-muted-foreground">
+          Bu ball IELTS shkalasida berilgan. Boshlang&apos;ich darajada asosiy maqsad ball emas, xatolarni ko&apos;rib
+          tuzatish va yozishni odatga aylantirishdir.
+        </p>
+      )}
 
       <table className="mt-8 w-full max-w-2xl border-collapse text-left">
         <caption className="sr-only">Mezonlar bo&apos;yicha ballar</caption>

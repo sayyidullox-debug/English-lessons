@@ -1,3 +1,5 @@
+import type { Level } from "./vocab";
+
 export type GrammarTopic = "tenses" | "articles" | "conditionals" | "prepositions" | "comparison" | "forms";
 
 export const TOPIC_LABEL: Record<GrammarTopic, string> = {
@@ -18,9 +20,18 @@ export interface GrammarQuestion {
   answer: number;
   /** Nima uchun shunday: o'zbekcha tushuntirish. */
   explanation: string;
+  level: Level;
 }
 
-export const GRAMMAR: GrammarQuestion[] = [
+type RawQuestion = Omit<GrammarQuestion, "level"> & { level?: Level };
+
+/** Birinchi yozilgan savollarning darajasi; ro'yxatda yo'qlari B1. */
+const LEVEL_BY_ID: Record<string, Level> = {
+  ...Object.fromEntries(["t3", "t4", "a1", "a2", "a3", "a5", "a6", "p1", "p3", "p4", "m1", "m2", "m4"].map((id) => [id, "A2" as const])),
+  ...Object.fromEntries(["t1", "t6", "c2", "c3", "c4", "c6", "m6", "f3", "f5"].map((id) => [id, "B2" as const])),
+};
+
+const CORE: RawQuestion[] = [
   {
     id: "t1",
     topic: "tenses",
@@ -338,4 +349,189 @@ export const GRAMMAR: GrammarQuestion[] = [
     answer: 3,
     explanation: "Narsaning o'zi haqida gapirsak -ing (boring film), odamning hissi haqida -ed (I was bored).",
   },
+  // ---- A1: boshlang'ich ----
+  {
+    id: "n1",
+    topic: "tenses",
+    level: "A1",
+    sentence: "I ____ a student.",
+    options: ["am", "is", "are", "be"],
+    answer: 0,
+    explanation: "'I' bilan to be fe'lining am shakli ishlatiladi: I am. He/she/it bilan is, we/you/they bilan are.",
+  },
+  {
+    id: "n2",
+    topic: "tenses",
+    level: "A1",
+    sentence: "She ____ tea every morning.",
+    options: ["drink", "drinks", "drinking", "drank"],
+    answer: 1,
+    explanation: "Har kungi odat Present Simple bilan aytiladi. He/she/it bilan fe'lga -s qo'shiladi: she drinks.",
+  },
+  {
+    id: "n3",
+    topic: "tenses",
+    level: "A1",
+    sentence: "They ____ football on Sundays.",
+    options: ["plays", "play", "playing", "is play"],
+    answer: 1,
+    explanation: "They (ular) bilan fe'lga -s qo'shilmaydi: they play.",
+  },
+  {
+    id: "n4",
+    topic: "tenses",
+    level: "A1",
+    sentence: "He ____ not like fish.",
+    options: ["do", "does", "is", "are"],
+    answer: 1,
+    explanation: "He/she/it bilan inkor does not (doesn't) bilan yasaladi: he does not like.",
+  },
+  {
+    id: "n5",
+    topic: "articles",
+    level: "A1",
+    sentence: "I have ____ apple.",
+    options: ["a", "an", "the", "-"],
+    answer: 1,
+    explanation: "Apple unli ovoz bilan boshlanadi, shuning uchun an: an apple, an egg, an orange.",
+  },
+  {
+    id: "n6",
+    topic: "prepositions",
+    level: "A1",
+    sentence: "The book is ____ the table.",
+    options: ["at", "in", "on", "to"],
+    answer: 2,
+    explanation: "Biror narsaning sirtida turishi on bilan aytiladi: on the table.",
+  },
+  {
+    id: "n7",
+    topic: "prepositions",
+    level: "A1",
+    sentence: "I get up ____ seven o'clock.",
+    options: ["in", "on", "at", "to"],
+    answer: 2,
+    explanation: "Aniq soat oldidan at ishlatiladi: at seven o'clock, at noon.",
+  },
+  {
+    id: "n8",
+    topic: "forms",
+    level: "A1",
+    sentence: "There ____ two cats in the garden.",
+    options: ["is", "are", "am", "be"],
+    answer: 1,
+    explanation: "Ko'plik otlar (two cats) bilan there are ishlatiladi. Birlikda there is.",
+  },
+  {
+    id: "n9",
+    topic: "forms",
+    level: "A1",
+    sentence: "____ is your name?",
+    options: ["Who", "Where", "What", "When"],
+    answer: 2,
+    explanation: "Ism so'ralganda what ishlatiladi: What is your name?",
+  },
+  {
+    id: "n10",
+    topic: "forms",
+    level: "A1",
+    sentence: "These are my ____.",
+    options: ["book", "books", "bookes", "a book"],
+    answer: 1,
+    explanation: "These ko'plikni bildiradi, shuning uchun ot ham ko'plikda: books.",
+  },
+  // ---- B2 ----
+  {
+    id: "h1",
+    topic: "conditionals",
+    level: "B2",
+    sentence: "If I ____ you, I would accept the offer.",
+    options: ["am", "was being", "were", "will be"],
+    answer: 2,
+    explanation: "Maslahat berishda 'If I were you' qolipi ishlatiladi. Rasmiy tilda barcha shaxslar bilan were.",
+  },
+  {
+    id: "h2",
+    topic: "forms",
+    level: "B2",
+    sentence: "The number of cars on the roads ____ increased sharply.",
+    options: ["have", "has", "are", "were"],
+    answer: 1,
+    explanation: "'The number of ...' birlik hisoblanadi (has). 'A number of ...' esa ko'plik: a number of cars have.",
+  },
+  {
+    id: "h3",
+    topic: "tenses",
+    level: "B2",
+    sentence: "She ____ for three hours when he finally arrived.",
+    options: ["has been waiting", "was wait", "had been waiting", "waits"],
+    answer: 2,
+    explanation: "Boshqa o'tgan voqeadan oldin boshlanib davom etgan ish: Past Perfect Continuous (had been + V-ing).",
+  },
+  {
+    id: "h4",
+    topic: "forms",
+    level: "B2",
+    sentence: "He suggested ____ the meeting until Monday.",
+    options: ["to postpone", "postpone", "postponed", "postponing"],
+    answer: 3,
+    explanation: "Suggest fe'lidan keyin -ing shakli keladi: suggested postponing.",
+  },
+  // ---- IELTS: yuqori daraja ----
+  {
+    id: "i1",
+    topic: "forms",
+    level: "IELTS",
+    sentence: "Not only ____ the exam, but she also won a scholarship.",
+    options: ["she passed", "did she pass", "she did pass", "passed she"],
+    answer: 1,
+    explanation: "'Not only' gap boshida kelsa, ega va yordamchi fe'l o'rin almashadi (inversiya): not only did she pass.",
+  },
+  {
+    id: "i2",
+    topic: "conditionals",
+    level: "IELTS",
+    sentence: "Had I known about the delay, I ____ earlier.",
+    options: ["would leave", "will leave", "had left", "would have left"],
+    answer: 3,
+    explanation: "'Had I known' bu 'If I had known' ning inversiyali shakli (Third Conditional). Natija qismi: would have + V3.",
+  },
+  {
+    id: "i3",
+    topic: "forms",
+    level: "IELTS",
+    sentence: "Rarely ____ such a talented student.",
+    options: ["I have seen", "have I seen", "did I saw", "I seen"],
+    answer: 1,
+    explanation: "'Rarely', 'seldom', 'never' gap boshida kelsa inversiya bo'ladi: rarely have I seen.",
+  },
+  {
+    id: "i4",
+    topic: "forms",
+    level: "IELTS",
+    sentence: "The policy is believed ____ unemployment last year.",
+    options: ["to reduce", "reducing", "reduced", "to have reduced"],
+    answer: 3,
+    explanation: "Fikr o'tmishdagi ish haqida bo'lsa, passiv tuzilmada 'to have + V3' ishlatiladi: is believed to have reduced.",
+  },
+  {
+    id: "i5",
+    topic: "forms",
+    level: "IELTS",
+    sentence: "Hardly had she entered the room ____ the phone rang.",
+    options: ["than", "when", "then", "that"],
+    answer: 1,
+    explanation: "'Hardly ... when' va 'No sooner ... than' qoliplari: hardly had she entered when.",
+  },
+  {
+    id: "i6",
+    topic: "conditionals",
+    level: "IELTS",
+    sentence: "If he had saved more money, he ____ a house now.",
+    options: ["would own", "would have owned", "will own", "owned"],
+    answer: 0,
+    explanation: "Aralash shart: o'tmishdagi sabab (had saved), hozirgi natija (now): would + fe'l.",
+  },
 ];
+
+export const GRAMMAR: GrammarQuestion[] = CORE.map((q) => ({ ...q, level: q.level ?? LEVEL_BY_ID[q.id] ?? "B1" }));

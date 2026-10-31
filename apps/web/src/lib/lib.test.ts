@@ -300,6 +300,17 @@ describe("writing analysis", () => {
     expect(demoFeedback(weak).annotations.length).toBeGreaterThan(0);
   });
 
+  it("so'z talabi darajaga qarab o'zgaradi: 40 so'zli matn A1 uchun yetarli, IELTS uchun emas", () => {
+    const text = "My name is Ali. I am twelve years old. I live in Tashkent with my family. I have a brother and a sister. I like football and I play it every day with my friends after school.";
+    const beginner = demoFeedback(text, 30);
+    const ielts = demoFeedback(text, 250);
+    expect(beginner.bands.task).toBeGreaterThan(ielts.bands.task);
+    expect(beginner.strengths.some((s) => s.includes("30"))).toBe(true);
+    expect(ielts.nextSteps.some((s) => s.includes("250"))).toBe(true);
+    // Qisqa matnda abzats va xulosa talab qilinmaydi
+    expect(beginner.nextSteps.some((s) => s.includes("abzats"))).toBe(false);
+  });
+
   it("qisqa inshoga leksika va bog'lanish uchun yuqori ball bermaydi", () => {
     const short = "However, many people work from home. Moreover, firms save money. Therefore, it is useful. For example, rent is lower.";
     const bands = demoFeedback(short).bands;
