@@ -44,7 +44,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <footer className="border-t border-border/80 py-8 text-sm text-muted-foreground">
             <div className="mx-auto max-w-6xl px-4 sm:px-6">
               Natijalar brauzeringizda saqlanadi, ro&apos;yxatdan o&apos;tish shart emas. Ball
-              baholari taxminiy va rasmiy IELTS natijasini bildirmaydi.
+              baholari taxminiy va rasmiy IELTS natijasini bildirmaydi. So&apos;zlar ro&apos;yxati:{" "}
+              <a
+                className="underline underline-offset-2 hover:text-foreground"
+                href="https://www.newgeneralservicelist.com"
+                rel="noreferrer"
+                target="_blank"
+              >
+                New General Service List
+              </a>{" "}
+              (Browne, Culligan, Phillips), CC BY-SA 4.0.
             </div>
           </footer>
         </TooltipProvider>

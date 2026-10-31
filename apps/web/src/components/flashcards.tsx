@@ -299,15 +299,19 @@ function Stat({ label, value }: { label: string; value: string | number }) {
   );
 }
 
+const LIST_STEP = 120;
+
 function WordList({ level }: { level: LevelFilter }) {
   const progress = useProgress();
+  const [shown, setShown] = useState(LIST_STEP);
+  const words = wordsOfLevel(level);
   return (
     <section aria-labelledby="barcha-sozlar" className="mt-16">
       <h2 id="barcha-sozlar" className="text-2xl font-bold tracking-tight">
         {level === "all" ? "Barcha so'zlar" : `${level} darajadagi so'zlar`}
       </h2>
       <ul className="mt-5 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
-        {wordsOfLevel(level).map((w) => {
+        {words.slice(0, shown).map((w) => {
           const box = progress.cards[w.id]?.box ?? 0;
           return (
             <li key={w.id} className="flex items-baseline justify-between gap-3 border-t border-border py-2.5">
@@ -328,6 +332,11 @@ function WordList({ level }: { level: LevelFilter }) {
           );
         })}
       </ul>
+      {shown < words.length && (
+        <Button variant="outline" className="mt-6 h-10 px-4" onClick={() => setShown((n) => n + LIST_STEP)}>
+          Yana ko&apos;rsatish ({words.length - shown})
+        </Button>
+      )}
     </section>
   );
 }
@@ -400,7 +409,7 @@ function Trainer() {
       <div className="mt-10">
         <Session key={`${level}-${direction}`} level={level} direction={direction} />
       </div>
-      <WordList level={level} />
+      <WordList key={level} level={level} />
     </>
   );
 }

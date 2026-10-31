@@ -1,4 +1,5 @@
 import { BASIC_WORDS } from "./vocab-basic";
+import { NGSL_WORDS } from "./vocab-ngsl";
 
 /** Darajalar: A1 boshlang'ich, IELTS esa yuqori (taxminan B2-C1) akademik so'zlar. */
 export type Level = "A1" | "A2" | "B1" | "B2" | "IELTS";
@@ -16,7 +17,7 @@ export const LEVEL_LABEL: Record<Level, string> = {
 export interface VocabWord {
   id: string;
   word: string;
-  pos: "noun" | "verb" | "adjective" | "adverb" | "phrase";
+  pos: "noun" | "verb" | "adjective" | "adverb" | "phrase" | "preposition" | "conjunction" | "pronoun";
   level: Level;
   /** O'zbekcha tarjima(lar), vergul bilan ajratilgan. Hammasi to'g'ri javob hisoblanadi. */
   uz: string;
@@ -354,11 +355,12 @@ const IELTS_WORDS: Array<Omit<VocabWord, "level">> = [
   },
 ];
 
-/** A1 dan IELTS gacha barcha so'zlar, daraja tartibida. */
+/** A1 dan IELTS gacha barcha so'zlar, daraja tartibida (har daraja ichida yozilgan tartibda). */
 export const VOCAB: VocabWord[] = [
   ...BASIC_WORDS,
+  ...NGSL_WORDS,
   ...IELTS_WORDS.map((w): VocabWord => ({ ...w, level: "IELTS" })),
-];
+].sort((a, b) => LEVELS.indexOf(a.level) - LEVELS.indexOf(b.level));
 
 export function wordsOfLevel(level: Level | "all"): VocabWord[] {
   return level === "all" ? VOCAB : VOCAB.filter((w) => w.level === level);

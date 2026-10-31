@@ -8,7 +8,7 @@ Ingliz tilini noldan IELTS gacha o'rgatadigan sayt o'zbek o'quvchilari uchun. In
 
 | Bo'lim | Nima qiladi |
 | --- | --- |
-| Lug'at | 299 ta so'z, 5 daraja: A1, A2, B1, B2, IELTS. Tarjimani o'zingiz yozasiz, sayt tekshiradi: lotin va kirill, bir nechta to'g'ri tarjima, imlo xatosini kechirish. Ikki yo'nalish (inglizcha → o'zbekcha va teskari). Leitner takrorlash tizimi, talaffuzni tinglash, darajangizni tavsiya qilish. |
+| Lug'at | 576 ta so'z (kengaytirilmoqda), 5 daraja: A1, A2, B1, B2, IELTS. Tarjimani o'zingiz yozasiz, sayt tekshiradi: lotin va kirill, bir nechta to'g'ri tarjima, imlo xatosini kechirish. Ikki yo'nalish (inglizcha → o'zbekcha va teskari). Leitner takrorlash tizimi, talaffuzni tinglash, darajangizni tavsiya qilish. |
 | Grammatika | 58 savol, 5 daraja, 6 mavzu. Har urinishda 12 tasi tasodifiy tanlanadi, variantlar aralashadi. Har javobga o'zbekcha tushuntirish. |
 | O'qish | 4 ta matn (A2, B1 va 2 ta IELTS), True / False / Not Given va tanlov savollari. Savollar va variantlar har urinishda aralashadi. Taymer, har javobning dalili, taxminiy band. |
 | Gapirish | 15 ta savol: A1 dan IELTS Part 1, 2, 3 gacha. Brauzer ovozni matnga aylantiradi (Chrome / Edge), tezlik, to'ldiruvchi so'zlar, so'z boyligi va xatolar baholanadi. |
@@ -55,6 +55,12 @@ Muhim qarorlar:
 
 - Ballar taxminiy. Rasmiy IELTS natijasini bildirmaydi.
 - Speaking: talaffuz baholanmaydi. Chrome ko'pincha um/uh kabi so'zlarni yozmaydi, shuning uchun ularning soni kam chiqishi mumkin. Firefox va Safari ovoz tanishni to'liq qo'llamaydi, u yerda javobni yozib tekshirtirsa bo'ladi.
-- Kontent hajmi hali cheklangan (299 so'z, 58 grammatika savoli, 4 matn). Yangisini `src/content` ga qo'shish kifoya, testlar mazmun butunligini o'zi tekshiradi.
+- Kontent hajmi hali cheklangan (576 so'z, 58 grammatika savoli, 4 matn). Yangisini `src/content` ga qo'shish kifoya, testlar mazmun butunligini o'zi tekshiradi.
 - Lug'at tarjimalarini yozishda ehtiyot bo'ldim, lekin ona tilida so'zlashuvchi o'qituvchi tekshirib chiqsa yaxshi bo'ladi.
 - Tezlik chegarasi (AI yo'li uchun) bitta server jarayoni xotirasida.
+
+## Manbalar va litsenziya
+
+- Chastotali so'zlar ro'yxati: [The New General Service List 1.2](https://www.newgeneralservicelist.com) (Browne, Culligan, Phillips), **CC BY-SA 4.0**. Ro'yxat `data/ngsl/` da, undan olingan so'zlar `apps/web/src/content/ngsl/` da. NGSL dan olingan lug'at ma'lumotlari ham CC BY-SA 4.0 ostida tarqatiladi (xuddi shu shartlar bilan).
+- O'zbekcha tarjimalar va misol gaplar loyiha uchun yozilgan va ona tilida so'zlashuvchi tomonidan tekshirilmagan.
+- Darslik kitoblardan nusxa olinmagan.

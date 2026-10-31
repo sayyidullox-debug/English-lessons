@@ -3,6 +3,7 @@ import { GRAMMAR } from "./grammar";
 import { PASSAGES } from "./reading";
 import { SPEAKING_PROMPTS } from "./speaking";
 import { LEVELS, VOCAB, wordsOfLevel } from "./vocab";
+import { NGSL_ERRORS, NGSL_WORDS } from "./vocab-ngsl";
 import { WRITING_PROMPTS } from "./writing";
 
 const unique = (values: string[]) => new Set(values).size === values.length;
@@ -34,6 +35,11 @@ describe("kontent butunligi", () => {
       expect(w.uz.trim().length, `${w.word} tarjimasi`).toBeGreaterThan(1);
       if (w.level === "IELTS") expect(w.collocations?.length, w.word).toBeGreaterThan(0);
     }
+  });
+
+  it("NGSL partiyalari: hamma satr to'g'ri formatda", () => {
+    expect(NGSL_ERRORS).toEqual([]);
+    expect(NGSL_WORDS.length).toBeGreaterThan(200);
   });
 
   it("lug'at: har darajada yetarli so'z bor va tartib A1 dan IELTS gacha", () => {

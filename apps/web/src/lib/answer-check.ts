@@ -115,11 +115,29 @@ export function checkEn(input: string, answers: readonly string[]): CheckResult 
  * (masalan, "mashhur" uchun famous ham, popular ham).
  */
 export function acceptedEnglish(word: VocabWord, all: readonly VocabWord[]): string[] {
-  const mine = new Set(acceptedUz(word).map(normalizeUz));
+  const index = translationIndex(all);
   const result = new Set<string>([word.word]);
-  for (const other of all) {
-    if (other.id === word.id) continue;
-    if (acceptedUz(other).some((a) => mine.has(normalizeUz(a)))) result.add(other.word);
+  for (const answer of acceptedUz(word)) {
+    for (const english of index.get(normalizeUz(answer)) ?? []) result.add(english);
   }
   return [...result];
+}
+
+/** Tarjima -> shu tarjimali inglizcha so'zlar. 3000 ta so'zda ham tez ishlashi uchun bir marta tuziladi. */
+const indexCache = new WeakMap<readonly VocabWord[], Map<string, string[]>>();
+
+function translationIndex(all: readonly VocabWord[]): Map<string, string[]> {
+  const cached = indexCache.get(all);
+  if (cached) return cached;
+  const index = new Map<string, string[]>();
+  for (const w of all) {
+    for (const answer of acceptedUz(w)) {
+      const key = normalizeUz(answer);
+      const list = index.get(key);
+      if (list) list.push(w.word);
+      else index.set(key, [w.word]);
+    }
+  }
+  indexCache.set(all, index);
+  return index;
 }
