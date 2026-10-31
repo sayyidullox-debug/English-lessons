@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { SPEAKING_PROMPTS } from "../content/speaking";
 import { overallBand, readingBand, roundBand } from "./band";
+import { analyseSpeech } from "./speaking-analysis";
 import { buildSegments } from "./feedback";
 import { shuffle, shuffleChoices } from "./shuffle";
 import { MASTERED_BOX, buildQueue, dayNumber, isMastered, review } from "./srs";
@@ -63,6 +65,55 @@ describe("srs", () => {
     const c = dayNumber(new Date(2026, 0, 2, 0, 1));
     expect(b).toBe(a);
     expect(c).toBe(a + 1);
+  });
+});
+
+describe("speaking analysis", () => {
+  const prompt = SPEAKING_PROMPTS[0]!;
+  const good =
+    "I prefer studying in the evening because it is quiet and I can concentrate better. For example my family is busy during the day, however after dinner the house becomes calm. As a result I finish more work in two hours than in the whole afternoon.";
+
+  it("tezlikni hisoblaydi va vaqt noma'lum bo'lsa ravonlikni baholamaydi", () => {
+    const withTime = analyseSpeech(good, 24, prompt);
+    expect(withTime.wpm).toBe(Math.round(withTime.words / (24 / 60)));
+    expect(withTime.bands.fluency).not.toBeNull();
+
+    const noTime = analyseSpeech(good, null, prompt);
+    expect(noTime.wpm).toBeNull();
+    expect(noTime.bands.fluency).toBeNull();
+    expect(noTime.overall).toBeGreaterThan(0);
+  });
+
+  it("to'ldiruvchi so'zlarni sanaydi va belgilaydi", () => {
+    const r = analyseSpeech("um I think uh it is you know good um for students", 10, prompt);
+    expect(r.fillers.find((f) => f.word === "um")?.count).toBe(2);
+    expect(r.fillers.find((f) => f.word === "you know")?.count).toBe(1);
+    expect(r.annotations.some((a) => a.quote === "uh")).toBe(true);
+  });
+
+  it("og'zaki nutqda qisqartma va kichik 'i' xato emas", () => {
+    expect(findIssues("i don't know, it's fine", { spoken: true })).toEqual([]);
+    expect(findIssues("i don't know", { spoken: false }).length).toBeGreaterThan(0);
+  });
+
+  it("juda sekin va qisqa javob ravonlikda past ball oladi", () => {
+    const slow = analyseSpeech("I like mornings because quiet", 30, prompt);
+    const fine = analyseSpeech(good, 24, prompt);
+    expect(slow.bands.fluency!).toBeLessThan(fine.bands.fluency!);
+    expect(slow.nextSteps.length).toBeGreaterThan(0);
+  });
+});
+
+describe("imlo qoidalari", () => {
+  it("ko'p uchraydigan imlo xatolarini topadi", () => {
+    const fixes = Object.fromEntries(findIssues("I recieve it. The goverment and the enviroment.").map((i) => [i.quote, i.fix]));
+    expect(fixes).toMatchObject({ recieve: "receive", goverment: "government", enviroment: "environment" });
+  });
+  it("yangi grammatika qoidalari ishlaydi", () => {
+    const fixOf = (t: string) => findIssues(t).map((i) => [i.quote, i.fix]);
+    expect(fixOf("I am agree with it.")).toContainEqual(["I am agree", "I agree"]);
+    expect(fixOf("In the other hand, it is true.")).toContainEqual(["In the other hand", "on the other hand"]);
+    expect(fixOf("He lives here since 5 years.")).toContainEqual(["since 5 years", "for 5 years"]);
   });
 });
 

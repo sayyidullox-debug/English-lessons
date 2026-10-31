@@ -3,6 +3,7 @@ import { Correction } from "@/components/correction";
 import { buttonVariants } from "@/components/ui/button";
 import { GRAMMAR } from "@/content/grammar";
 import { PASSAGES } from "@/content/reading";
+import { SPEAKING_PROMPTS } from "@/content/speaking";
 import { VOCAB } from "@/content/vocab";
 import { WRITING_PROMPTS } from "@/content/writing";
 import { cn } from "@/lib/utils";
@@ -27,6 +28,12 @@ const SECTIONS = [
     name: "O'qish",
     text: "Haqiqiy imtihon formatidagi matn: True, False, Not Given. Natija taxminiy band bilan.",
     stat: `${PASSAGES.length} ta matn`,
+  },
+  {
+    href: "/speaking",
+    name: "Gapirish",
+    text: "Savolga inglizcha javob bering: brauzer ovozni matnga aylantiradi, tezlik va xatolar bepul tekshiriladi.",
+    stat: `${SPEAKING_PROMPTS.length} ta savol`,
   },
   {
     href: "/writing",
@@ -68,8 +75,9 @@ export default function HomePage() {
             Inshongizni imtihonchi qalami bilan ko&apos;ring
           </h1>
           <p className="mt-6 max-w-[52ch] text-lg leading-relaxed text-muted-foreground">
-            IELTS uchun lug&apos;at, grammatika, o&apos;qish va yozish mashqlari. Yozgan inshongizdagi har
-            bir xato qizil qalam bilan belgilanadi, yoniga tuzatishi va sababi yoziladi.
+            IELTS uchun lug&apos;at, grammatika, o&apos;qish, gapirish va yozish mashqlari. Yozgan inshongizdagi har
+            bir xato qizil qalam bilan belgilanadi, yoniga tuzatishi va sababi yoziladi. Hammasi bepul,
+            ro&apos;yxatdan o&apos;tish shart emas.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/writing" className={cn(buttonVariants({ size: "lg" }), "h-11 px-5 text-base")}>
@@ -125,7 +133,7 @@ export default function HomePage() {
       <section className="border-t border-border/80 bg-card/50">
         <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <h2 className="max-w-[30ch] text-3xl font-bold tracking-tight text-balance">
-            To&apos;rt yo&apos;nalishda har kuni o&apos;n besh daqiqa
+            Besh yo&apos;nalishda har kuni o&apos;n besh daqiqa, hammasi bepul
           </h2>
           <ul className="mt-8 divide-y divide-border border-y border-border">
             {SECTIONS.map(({ href, name, text, stat }) => (

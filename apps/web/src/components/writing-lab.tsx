@@ -196,7 +196,7 @@ function ResultView({ result }: { result: Result }) {
           <p className="font-serif text-8xl font-semibold italic leading-none text-pen">{formatBand(overall)}</p>
         </div>
         <Badge variant={mode === "ai" ? "default" : "outline"} className="mb-3 h-6 px-2">
-          {mode === "ai" ? "AI tekshiruvi" : "Demo rejim"}
+          {mode === "ai" ? "AI tekshiruvi" : "Bepul tekshiruv"}
         </Badge>
       </div>
       <p className="mt-5 max-w-[62ch] leading-relaxed">{feedback.summary}</p>

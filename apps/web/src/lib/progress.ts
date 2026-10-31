@@ -21,12 +21,20 @@ export interface EssayResult {
   mode: "ai" | "demo";
 }
 
+export interface SpeakingResult {
+  at: number;
+  promptId: string;
+  words: number;
+  overall: number;
+}
+
 export interface ProgressData {
   version: 1;
   cards: Record<string, CardState>;
   grammar: Record<string, GrammarRecord>;
   readings: ReadingResult[];
   essays: EssayResult[];
+  speaking: SpeakingResult[];
   /** Mashq qilingan kunlar (dayNumber). */
   days: number[];
 }
@@ -37,6 +45,7 @@ export const EMPTY_PROGRESS: ProgressData = {
   grammar: {},
   readings: [],
   essays: [],
+  speaking: [],
   days: [],
 };
 
@@ -62,6 +71,10 @@ export function recordGrammar(data: ProgressData, questionId: string, correct: b
 
 export function recordReading(data: ProgressData, result: ReadingResult, day: number): ProgressData {
   return touchDay({ ...data, readings: [...data.readings, result].slice(-HISTORY_LIMIT) }, day);
+}
+
+export function recordSpeaking(data: ProgressData, result: SpeakingResult, day: number): ProgressData {
+  return touchDay({ ...data, speaking: [...data.speaking, result].slice(-HISTORY_LIMIT) }, day);
 }
 
 export function recordEssay(data: ProgressData, result: EssayResult, day: number): ProgressData {
@@ -106,6 +119,7 @@ export function parseProgress(raw: string | null): ProgressData {
       grammar: value.grammar ?? {},
       readings: Array.isArray(value.readings) ? value.readings : [],
       essays: Array.isArray(value.essays) ? value.essays : [],
+      speaking: Array.isArray(value.speaking) ? value.speaking : [],
       days: Array.isArray(value.days) ? value.days : [],
     };
   } catch {

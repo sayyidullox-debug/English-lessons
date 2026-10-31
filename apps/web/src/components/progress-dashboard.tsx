@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { GRAMMAR, TOPIC_LABEL, type GrammarTopic } from "@/content/grammar";
 import { PASSAGES } from "@/content/reading";
+import { SPEAKING_PROMPTS } from "@/content/speaking";
 import { VOCAB } from "@/content/vocab";
 import { WRITING_PROMPTS } from "@/content/writing";
 import { formatBand } from "@/lib/band";
@@ -32,10 +33,11 @@ export function ProgressDashboard() {
 
   return (
     <div>
-      <dl className="grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
+      <dl className="grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
         <Stat label="Ketma-ket kunlar" value={streak(data.days, today)} />
         <Stat label="O'zlashtirilgan so'zlar" value={`${masteredCount(data.cards)} / ${VOCAB.length}`} hint={`${seenWords} ta ko'rilgan`} />
         <Stat label="Grammatika aniqligi" value={grammarAcc === null ? "-" : `${Math.round(grammarAcc * 100)}%`} />
+        <Stat label="Gapirish mashqlari" value={data.speaking.length} />
         <Stat label="Yozilgan insholar" value={data.essays.length} />
       </dl>
 
@@ -85,7 +87,7 @@ export function ProgressDashboard() {
                   <span>
                     {WRITING_PROMPTS.find((p) => p.id === e.promptId)?.topic ?? "Mavzu"}
                     <span className="ml-2 text-sm text-muted-foreground">
-                      {dateFormat.format(e.at)}, {e.words} so&apos;z{e.mode === "demo" ? ", demo" : ""}
+                      {dateFormat.format(e.at)}, {e.words} so&apos;z{e.mode === "demo" ? ", bepul tekshiruv" : ""}
                     </span>
                   </span>
                   <span className="font-serif text-2xl font-semibold italic text-pen">{formatBand(e.overall)}</span>
@@ -93,6 +95,31 @@ export function ProgressDashboard() {
               ))}
             </ul>
           </>
+        )}
+      </section>
+
+      <section aria-labelledby="gapirish" className="mt-14">
+        <h2 id="gapirish" className="text-2xl font-bold tracking-tight">
+          Gapirish
+        </h2>
+        {data.speaking.length === 0 ? (
+          <p className="mt-3 text-muted-foreground">Hali gapirish mashqi bajarilmagan.</p>
+        ) : (
+          <ul className="mt-4 max-w-xl divide-y divide-border border-y border-border">
+            {[...data.speaking].reverse().slice(0, 8).map((s) => (
+              <li key={s.at} className="flex items-baseline justify-between gap-4 py-3">
+                <span className="min-w-0">
+                  <span className="block max-w-[34ch] truncate">
+                    {SPEAKING_PROMPTS.find((p) => p.id === s.promptId)?.question ?? "Savol"}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    {dateFormat.format(s.at)}, {s.words} so&apos;z
+                  </span>
+                </span>
+                <span className="font-serif text-2xl font-semibold italic text-pen">{formatBand(s.overall)}</span>
+              </li>
+            ))}
+          </ul>
         )}
       </section>
 

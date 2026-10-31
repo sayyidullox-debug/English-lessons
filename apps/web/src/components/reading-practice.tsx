@@ -48,12 +48,48 @@ function prepareReading(passage: ReadingPassage): ReadingPassage {
   };
 }
 
-export function ReadingPractice({ passage }: { passage: ReadingPassage }) {
+export function ReadingPractice({ passages }: { passages: ReadingPassage[] }) {
   const hydrated = useHydrated();
   const [attempt, setAttempt] = useState(0);
-  // Tasodifiy tartib faqat brauzerda tuziladi, aks holda server va mijoz tartibi mos kelmaydi
-  if (!hydrated) return <div className="min-h-[40rem]" aria-hidden="true" />;
-  return <Practice key={attempt} passage={passage} onRetry={() => setAttempt((n) => n + 1)} />;
+  const [passageId, setPassageId] = useState(passages[0]?.id ?? "");
+  const passage = passages.find((p) => p.id === passageId) ?? passages[0];
+
+  return (
+    <div>
+      {passages.length > 1 && (
+        <fieldset className="mb-10">
+          <legend className="text-sm font-medium text-muted-foreground">Matn</legend>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {passages.map((p) => (
+              <label key={p.id} className="cursor-pointer">
+                <input
+                  type="radio"
+                  name="passage"
+                  value={p.id}
+                  checked={p.id === passageId}
+                  onChange={() => setPassageId(p.id)}
+                  className="peer sr-only"
+                />
+                <span className="inline-block rounded-md border border-border bg-card px-3 py-2 text-sm font-medium transition-colors peer-checked:border-foreground peer-checked:bg-marker peer-checked:text-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-samarkand">
+                  {p.title}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
+      {/* Tasodifiy tartib faqat brauzerda tuziladi, aks holda server va mijoz tartibi mos kelmaydi */}
+      {!hydrated || !passage ? (
+        <div className="min-h-[40rem]" aria-hidden="true" />
+      ) : (
+        <Practice
+          key={`${passage.id}-${attempt}`}
+          passage={passage}
+          onRetry={() => setAttempt((n) => n + 1)}
+        />
+      )}
+    </div>
+  );
 }
 
 function Practice({ passage: source, onRetry }: { passage: ReadingPassage; onRetry: () => void }) {

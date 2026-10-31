@@ -8,6 +8,7 @@ const NAV = [
   { href: "/vocabulary", label: "Lug'at" },
   { href: "/grammar", label: "Grammatika" },
   { href: "/reading", label: "O'qish" },
+  { href: "/speaking", label: "Gapirish" },
   { href: "/writing", label: "Yozish" },
   { href: "/progress", label: "Natijalar" },
 ] as const;

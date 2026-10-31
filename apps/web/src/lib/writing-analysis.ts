@@ -2,8 +2,8 @@ import { roundBand } from "./band";
 import type { Feedback, FeedbackAnnotation } from "./feedback";
 
 /**
- * Demo rejim: AI kaliti bo'lmaganda ishlaydigan qoidaga asoslangan tahlil.
- * U mazmunni baholay olmaydi, faqat uzunlik, tuzilma, bog'lovchilar va
+ * Bepul tekshiruv: pul va kalit talab qilmaydigan, qoidaga asoslangan tahlil.
+ * U mazmunni baholay olmaydi, faqat uzunlik, tuzilma, bog'lovchilar, imlo va
  * o'zbek o'quvchilari tez-tez qiladigan xatolarni ushlaydi. Ballar taxminiy.
  */
 
@@ -11,7 +11,27 @@ interface Rule {
   pattern: RegExp;
   fix: (match: RegExpMatchArray) => string;
   why: string;
+  /** Faqat yozma rasmiy uslubda xato (og'zaki nutqda qisqartma normal). */
+  formalOnly?: boolean;
 }
+
+const misspellings: Record<string, string> = {
+  recieve: "receive",
+  definately: "definitely",
+  enviroment: "environment",
+  goverment: "government",
+  beleive: "believe",
+  occured: "occurred",
+  seperate: "separate",
+  neccessary: "necessary",
+  accomodation: "accommodation",
+  tommorow: "tomorrow",
+  untill: "until",
+  diffrent: "different",
+  intresting: "interesting",
+  freind: "friend",
+  becuase: "because",
+};
 
 const thirdPerson: Record<string, string> = { go: "goes", have: "has", do: "does" };
 const uncountable: Record<string, string> = {
@@ -100,6 +120,7 @@ const RULES: Rule[] = [
     pattern: /\b(dont|doesnt|didnt|cant|wont|isnt|arent)\b/gi,
     fix: (m) => contractionFixes[m[0].toLowerCase()] ?? m[0],
     why: "IELTS Writing rasmiy uslubda yoziladi: qisqartmalarsiz.",
+    formalOnly: true,
   },
   {
     pattern: /\b\w+n't\b|\b(?:i|you|we|they)'(?:re|ve|ll|d|m)\b/gi,
@@ -110,11 +131,13 @@ const RULES: Rule[] = [
       return w.endsWith("n't") ? `${w.slice(0, -3)} not` : w;
     },
     why: "Qisqartmalar so'zlashuv uslubi. Inshoda to'liq yozing.",
+    formalOnly: true,
   },
   {
     pattern: /\b(a lot of|lots of|kids|stuff|guys|gonna|wanna)\b/gi,
     fix: (m) => informalWords[m[0].toLowerCase()] ?? m[0],
     why: "Bu so'z norasmiy. Akademik uslub uchun boshqasini tanlang.",
+    formalOnly: true,
   },
   {
     pattern: /\bin my opinion,? I think\b/gi,
@@ -126,14 +149,55 @@ const RULES: Rule[] = [
     fix: (m) => m[1] ?? "",
     why: "So'z tasodifan ikki marta yozilgan.",
   },
+  {
+    pattern: /\bI am agree\b/gi,
+    fix: () => "I agree",
+    why: "Agree fe'li o'zi harakat bildiradi, oldiga am qo'yilmaydi.",
+  },
+  {
+    pattern: /\bin the other hand\b/gi,
+    fix: () => "on the other hand",
+    why: "Ibora qolipi: 'on the one hand ... on the other hand'.",
+  },
+  {
+    pattern: /\bsince (\d{1,2}|many|several|a few|some) years\b/gi,
+    fix: (m) => `for ${m[1]} years`,
+    why: "Davomiylik uchun for ishlatiladi, since esa boshlanish nuqtasi bilan (since 2019).",
+  },
+  {
+    pattern: /\baccording to me\b/gi,
+    fix: () => "in my opinion",
+    why: "O'z fikringizni 'in my opinion' bilan bildiring. 'According to' boshqalarning fikriga ishora qiladi.",
+  },
+  {
+    pattern: /\ban other\b/gi,
+    fix: () => "another",
+    why: "'Another' bitta so'z.",
+  },
+  {
+    pattern: /\balot\b/gi,
+    fix: () => "a lot",
+    why: "'A lot' ikki so'z.",
+  },
+  {
+    pattern: new RegExp(`\\b(${Object.keys(misspellings).join("|")})\\b`, "gi"),
+    fix: (m) => misspellings[m[0].toLowerCase()] ?? m[0],
+    why: "Imlo xatosi.",
+  },
 ];
 
 const LOWERCASE_I = /(?<![\w'])i(?![\w'.])/g;
 
-export function findIssues(essay: string): FeedbackAnnotation[] {
+export interface IssueOptions {
+  /** Og'zaki nutq: qisqartma, norasmiy so'z va kichik 'i' xato hisoblanmaydi. */
+  spoken?: boolean;
+}
+
+export function findIssues(essay: string, { spoken = false }: IssueOptions = {}): FeedbackAnnotation[] {
   const issues: Array<FeedbackAnnotation & { index: number }> = [];
 
   for (const rule of RULES) {
+    if (spoken && rule.formalOnly) continue;
     for (const match of essay.matchAll(rule.pattern)) {
       issues.push({
         index: match.index ?? 0,
@@ -143,7 +207,7 @@ export function findIssues(essay: string): FeedbackAnnotation[] {
       });
     }
   }
-  for (const match of essay.matchAll(LOWERCASE_I)) {
+  for (const match of spoken ? [] : essay.matchAll(LOWERCASE_I)) {
     issues.push({
       index: match.index ?? 0,
       quote: match[0],
@@ -259,8 +323,8 @@ export function demoFeedback(essay: string): Feedback {
 
   const summary =
     annotations.length === 0
-      ? "Qoidaga asoslangan tekshiruvda belgilangan xato topilmadi. Demo rejim mazmunni baholay olmaydi, shuning uchun to'liq tekshiruv uchun AI kalitini ulang."
-      : `Demo tekshiruv ${annotations.length} ta joyni belgiladi. Bu rejim mazmunni baholamaydi: ballar uzunlik, tuzilma va xatolar soniga qarab taxmin qilingan.`;
+      ? "Bepul tekshiruv belgilangan xato topmadi. U faqat odatiy xatolar, imlo va tuzilmani ko'radi, mazmunni baholamaydi. Mazmunni o'qituvchi yoki do'stingizga ko'rsating."
+      : `Bepul tekshiruv ${annotations.length} ta joyni belgiladi. U mazmunni baholamaydi: ballar uzunlik, tuzilma va xatolar soniga qarab taxmin qilingan.`;
 
   return {
     bands,
