@@ -715,4 +715,142 @@ error|noun|xato|The computer shows an error.
 arrest|verb|hibsga olmoq|The police arrested him.
 assess|verb|baholamoq|The teacher assesses our work.
 register|verb|ro'yxatdan o'tmoq|I want to register for the course.
+signal|noun|signal, belgi|The signal is weak here.
+finger|noun|barmoq|She hurt her finger.
+explore|verb|kashf qilmoq, o'rganmoq|We want to explore the old city.
+wake|verb|uyg'onmoq, uyg'otmoq|I wake up at six.
+bright|adjective|yorqin, yorug'|The room is bright and warm.
+frame|noun|ramka|The picture is in a gold frame.
+slowly|adverb|sekin, asta|Please speak slowly.
+hire|verb|ishga yollamoq, ijaraga olmoq|They hire new teachers every year.
+hole|noun|teshik, chuqur|There is a hole in my sock.
+tie|verb|bog'lamoq|Tie your shoes.
+chain|noun|zanjir|She wears a gold chain.
+forest|noun|o'rmon|We walk in the forest.
+label|noun|yorliq|Read the label on the bottle.
+root|noun|ildiz|The tree has deep roots.
+factory|noun|zavod, fabrika|He works in a car factory.
+expense|noun|xarajat|Travel is a big expense.
+channel|noun|kanal|I watch a sports channel.
+west|noun|g'arb|The sun sets in the west.
+friendly|adjective|do'stona, mehribon|The people here are friendly.
+resident|noun|aholi, yashovchi|The residents of the building met today.
+plenty|noun|ko'p, mo'l|We have plenty of time.
+bridge|noun|ko'prik|The bridge crosses the river.
+brand|noun|brend, marka|This is a famous brand.
+ice|noun|muz|Put some ice in the glass.
+grade|noun|baho, sinf|I got a good grade in math.
+rent|noun|ijara|The rent is expensive.
+shot|noun|o'q, zarba|He took a good shot.
+desk|noun|ish stoli, parta|My desk is near the window.
+empty|adjective|bo'sh|The box is empty.
+soft|adjective|yumshoq|The bed is very soft.
+row|noun|qator|We sat in the front row.
+lock|verb|qulflamoq|Lock the door, please.
+shoulder|noun|yelka|My shoulder hurts.
+breath|noun|nafas|Take a deep breath.
+bottle|noun|shisha, butilka|I need a bottle of water.
+sheet|noun|varaq, choyshab|Give me a sheet of paper.
+engine|noun|dvigatel|The car has a new engine.
+journey|noun|sayohat, yo'l|The journey takes two hours.
+debt|noun|qarz|He has a large debt.
+careful|adjective|ehtiyotkor|Be careful on the road.
+tiny|adjective|juda kichik|They live in a tiny flat.
+fruit|noun|meva|I eat fruit every day.
+mail|noun|pochta|I check my mail every morning.
+terrible|adjective|dahshatli, juda yomon|The weather was terrible.
+anywhere|adverb|hech qayerda, istalgan joyda|I cannot find my keys anywhere.
+fat|adjective|semiz, yog'li|Too much fat food is bad for you.
+entry|noun|kirish|There is no entry after nine.
+tip|noun|maslahat, choy puli|Here is a useful tip.
+discount|noun|chegirma|The shop gives a ten percent discount.
+peak|noun|cho'qqi|We reached the peak at noon.
+ear|noun|quloq|My ear hurts.
+disappear|verb|g'oyib bo'lmoq|The sun disappeared behind the clouds.
+shout|verb|baqirmoq|Do not shout in the library.
+yard|noun|hovli|The children play in the yard.
+hill|noun|tepalik|The village is on a hill.
+kiss|verb|o'pmoq|She kisses her mother goodbye.
+weak|adjective|zaif|He is weak after the illness.
+thin|adjective|ingichka, ozg'in|She is tall and thin.
+plate|noun|likopcha, tarelka|Put the food on the plate.
+ban|verb|taqiqlamoq|They ban smoking in the building.
+sad|adjective|xafa, g'amgin|I am sad because he is gone.
+circle|noun|doira|Draw a circle on the paper.
+helpful|adjective|foydali, yordam beradigan|The teacher is very helpful.
+sick|adjective|kasal|My brother is sick today.
+joke|noun|hazil, latifa|He told a funny joke.
+sky|noun|osmon|The sky is clear tonight.
+column|noun|ustun|The article is in two columns.
+ancient|adjective|qadimiy|Samarkand is an ancient city.
+coast|noun|qirg'oq, sohil|They live on the coast.
+ill|adjective|kasal|She feels ill today.
+kick|verb|tepmoq|Kick the ball to me.
+mobile|adjective|ko'chma, mobil|I lost my mobile phone.
+hat|noun|shlyapa, bosh kiyim|He wears a black hat.
+east|noun|sharq|The sun rises in the east.
+wage|noun|ish haqi|The wage is low.
+remark|noun|fikr, izoh|That was a rude remark.
+medicine|noun|dori, tibbiyot|Take this medicine twice a day.
+professor|noun|professor|The professor teaches physics.
+rare|adjective|kam uchraydigan|This bird is very rare.
+dozen|noun|o'nikta, o'n ikkita|Buy a dozen eggs.
+gap|noun|bo'shliq, tanaffus|There is a gap in the fence.
+alive|adjective|tirik|The old man is still alive.
+shut|verb|yopmoq|Shut the window, it is cold.
+sweet|adjective|shirin|The tea is too sweet.
+tall|adjective|baland bo'yli|He is very tall.
+smell|noun|hid|I like the smell of fresh bread.
+pilot|noun|uchuvchi|The pilot welcomed the passengers.
+lake|noun|ko'l|We swim in the lake.
+yellow|adjective|sariq|She has a yellow bag.
+bone|noun|suyak|He broke a bone in his foot.
+gray|adjective|kulrang|The sky is gray today.
+plastic|noun|plastik|Do not use plastic bags.
+boss|noun|boshliq|My boss is very kind.
+coat|noun|palto, ustki kiyim|Wear a warm coat.
+pocket|noun|cho'ntak|I have my phone in my pocket.
+lucky|adjective|omadli|You are lucky today.
+crash|noun|halokat, to'qnashuv|There was a car crash.
+king|noun|shoh, qirol|The king lived in a big palace.
+repair|verb|ta'mirlamoq|I need to repair my bike.
+borrow|verb|qarzga olmoq, vaqtincha olmoq|Can I borrow your pen?
+dish|noun|taom, idish|Plov is a popular dish.
+abroad|adverb|chet elda|He studies abroad.
+proud|adjective|g'ururli|I am proud of you.
+slide|verb|sirg'anmoq|The children slide down the hill.
+nearby|adverb|yaqin atrofda|There is a bank nearby.
+valuable|adjective|qimmatli|This is a valuable painting.
+climate|noun|iqlim|The climate here is dry.
+brown|adjective|jigarrang|She has brown eyes.
+breathe|verb|nafas olmoq|Breathe deeply.
+excuse|noun|bahona, uzr|He always has an excuse.
+tennis|noun|tennis|We play tennis on Saturdays.
+mouse|noun|sichqoncha|The cat caught a mouse.
+upper|adjective|yuqori|My room is on the upper floor.
+luck|noun|omad|Good luck with your exam!
+sudden|adjective|to'satdan|It was a sudden change.
+comfort|noun|qulaylik, taskin|This chair gives good comfort.
+neck|noun|bo'yin|He has a long neck.
+plot|noun|syujet, yer uchastkasi|The plot of the film is simple.
+calm|adjective|osoyishta, xotirjam|The sea is calm today.
+silence|noun|sukunat|There was silence in the room.
+bike|noun|velosiped|I go to work by bike.
+wheel|noun|g'ildirak|The car has four wheels.
+toy|noun|o'yinchoq|The child plays with a toy.
+storm|noun|bo'ron|A storm is coming.
+thick|adjective|qalin|This is a thick book.
+hunt|verb|ov qilmoq|Lions hunt at night.
+fault|noun|ayb, nuqson|It was not my fault.
+crop|noun|ekin, hosil|The farmers have a good crop this year.
+hi|phrase|salom|Hi! How are you?
+dad|noun|dada, ota|My dad works in a bank.
+native|adjective|tug'ma, mahalliy|English is not my native language.
+truly|adverb|chindan, haqiqatan|I am truly sorry.
+seed|noun|urug'|Plant the seed in the soil.
+angry|adjective|jahldor, g'azabli|She is angry with me.
+knock|verb|taqillatmoq|Please knock before you enter.
+passenger|noun|yo'lovchi|The bus has twenty passengers.
+drama|noun|drama, teatr asari|We watched a drama on TV.
+honor|noun|sharaf, hurmat|It is an honor to meet you.
 `;
