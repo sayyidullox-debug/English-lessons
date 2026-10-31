@@ -853,4 +853,283 @@ knock|verb|taqillatmoq|Please knock before you enter.
 passenger|noun|yo'lovchi|The bus has twenty passengers.
 drama|noun|drama, teatr asari|We watched a drama on TV.
 honor|noun|sharaf, hurmat|It is an honor to meet you.
+prize|noun|mukofot, sovrin|She won the first prize.
+wing|noun|qanot|The bird has a broken wing.
+laughter|noun|kulgi|I heard laughter in the room.
+roof|noun|tom|The cat is on the roof.
+soil|noun|tuproq|Plants need good soil.
+smart|adjective|aqlli, ziyrak|She is a smart student.
+layer|noun|qatlam|Put a layer of cheese on the bread.
+tooth|noun|tish|I have a pain in my tooth.
+silver|noun|kumush|The ring is made of silver.
+honest|adjective|halol, rostgo'y|He is an honest man.
+wire|noun|sim|The wire is very thin.
+inch|noun|dyuym|He is six feet two inches tall.
+solid|adjective|qattiq, mustahkam|Ice is solid water.
+elderly|adjective|keksa|We help elderly people.
+uniform|noun|forma|The children wear a school uniform.
+port|noun|port|The ship arrived at the port.
+gate|noun|darvoza|Please close the gate.
+beer|noun|pivo|He ordered a beer.
+mood|noun|kayfiyat|She is in a good mood today.
+crack|noun|yoriq|There is a crack in the cup.
+cable|noun|kabel|I need a charger cable.
+nervous|adjective|asabiy, hayajonlangan|I am nervous before an exam.
+tight|adjective|tor, siqiq|These shoes are too tight.
+wet|adjective|nam, ho'l|My clothes are wet.
+string|noun|ip, tor|Tie the box with a string.
+cloud|noun|bulut|There are no clouds today.
+grand|adjective|ulug', ajoyib|They live in a grand house.
+crew|noun|ekipaj, brigada|The ship's crew has twenty men.
+pupil|noun|o'quvchi|The pupils are in the classroom.
+assist|verb|yordam bermoq|Can I assist you?
+hero|noun|qahramon|He is a hero for the whole town.
+truck|noun|yuk mashinasi|The truck carries fruit.
+nose|noun|burun|She has a small nose.
+beside|preposition|yonida|Sit beside me.
+sail|verb|suzmoq (kema bilan)|They sail across the lake.
+pace|noun|qadam tezligi, sur'at|He walks at a fast pace.
+guilty|adjective|aybdor|He feels guilty about it.
+mom|noun|oyi, ona|My mom cooks very well.
+pour|verb|quymoq|Pour some tea for me, please.
+sweep|verb|supurmoq|I sweep the floor every morning.
+pub|noun|pab, ichimlik uyi|They met in a pub.
+stream|noun|ariq, oqim|A small stream runs through the garden.
+height|noun|balandlik, bo'y|What is your height?
+western|adjective|g'arbiy|He lives in western Uzbekistan.
+muscle|noun|mushak|Exercise builds muscle.
+scare|verb|qo'rqitmoq|The noise scared the baby.
+badly|adverb|yomon, qattiq|He plays tennis badly.
+everyday|adjective|kundalik|This is an everyday expression.
+scream|verb|qichqirmoq|She screamed when she saw the mouse.
+furniture|noun|mebel|We bought new furniture.
+symbol|noun|ramz, belgi|The dove is a symbol of peace.
+apartment|noun|kvartira|They live in a small apartment.
+steel|noun|po'lat|The bridge is made of steel.
+cake|noun|tort, pirog|She baked a chocolate cake.
+wound|noun|yara|The wound is deep.
+album|noun|albom|I bought her new album.
+singer|noun|qo'shiqchi|She is a famous singer.
+trail|noun|so'qmoq, iz|We followed the trail to the lake.
+trap|noun|tuzoq|The mouse is in the trap.
+loose|adjective|bo'sh, keng|This shirt is too loose.
+tank|noun|bak, sisterna|The tank is full of water.
+evil|adjective|yovuz|The film is about an evil king.
+tune|noun|kuy, ohang|I like this tune.
+grass|noun|o't|The children sit on the grass.
+frighten|verb|qo'rqitmoq|Loud noises frighten dogs.
+brilliant|adjective|ajoyib, zehnli|She has a brilliant idea.
+mirror|noun|oyna|I look in the mirror.
+awful|adjective|dahshatli|The food was awful.
+poem|noun|she'r|He wrote a poem for her.
+alcohol|noun|spirtli ichimlik|Alcohol is bad for health.
+festival|noun|festival, bayram|The city has a music festival.
+vegetable|noun|sabzavot|Eat more vegetables.
+van|noun|mikroavtobus, furgon|The van carries the luggage.
+planet|noun|sayyora|Earth is a planet.
+curve|noun|egri chiziq, burilish|The road has a sharp curve.
+knee|noun|tizza|My knee hurts when I run.
+web|noun|to'r, veb|I found it on the web.
+entrance|noun|kirish joyi|Meet me at the entrance.
+log|noun|xoda, jurnal|They sat on a log near the fire.
+giant|adjective|ulkan|They saw a giant tree.
+god|noun|xudo|He believes in God.
+sugar|noun|shakar|I take tea without sugar.
+inner|adjective|ichki|The inner room is quiet.
+harm|noun|zarar|Smoking does great harm.
+pink|adjective|pushti|She wears a pink dress.
+shadow|noun|soya|The tree gives a lot of shadow.
+strip|noun|tasma, yo'l|Cut a strip of paper.
+smooth|adjective|silliq|The table is smooth.
+exam|noun|imtihon|I have an exam on Monday.
+loud|adjective|baland (ovoz)|The music is too loud.
+jacket|noun|kurtka|Wear your jacket, it is cold.
+dirty|adjective|iflos|The floor is dirty.
+iron|noun|temir, dazmol|The gate is made of iron.
+blind|adjective|ko'r|The old man is blind.
+pure|adjective|toza|This is pure water.
+bend|verb|egmoq, egilmoq|Bend your knees.
+alarm|noun|signal, budilnik|I set the alarm for six.
+flood|noun|toshqin|The flood destroyed many houses.
+crazy|adjective|jinni, aqldan ozgan|That idea is crazy.
+boot|noun|etik|He wears heavy boots.
+button|noun|tugma|Press the green button.
+desert|noun|cho'l|Camels live in the desert.
+bowl|noun|kosa, piyola|She put the soup in a bowl.
+bath|noun|vanna, cho'milish|I take a bath every evening.
+tap|noun|jo'mrak|Turn off the tap, please.
+lip|noun|lab|She has red lips.
+grab|verb|ushlab olmoq|He grabbed my arm.
+lend|verb|qarz bermoq, vaqtincha bermoq|Can you lend me your pen?
+translate|verb|tarjima qilmoq|Translate this sentence into Uzbek.
+edit|verb|tahrirlamoq|Please edit my essay.
+pleasant|adjective|yoqimli|We had a pleasant evening.
+rough|adjective|dag'al, qo'pol|The road is rough.
+seal|verb|muhrlamoq, yopmoq|Seal the envelope.
+tube|noun|naycha, metro|I take the tube to work.
+tower|noun|minora|We climbed the tower.
+spin|verb|aylanmoq, ayltirmoq|The wheel spins fast.
+dig|verb|qazimoq|They dig a hole in the garden.
+drag|verb|sudramoq|Do not drag the box.
+wrap|verb|o'ramoq|Wrap the gift in paper.
+chicken|noun|tovuq|We had chicken for dinner.
+virus|noun|virus|This virus spreads quickly.
+teenager|noun|o'smir|My brother is a teenager.
+admire|verb|hayratlanmoq|I admire her courage.
+surgery|noun|jarrohlik, operatsiya|He had surgery on his knee.
+musician|noun|musiqachi|The musician plays the guitar.
+shower|noun|dush|I take a shower every morning.
+illegal|adjective|noqonuniy|It is illegal to park here.
+charity|noun|xayriya|She gives money to charity.
+cigarette|noun|sigaret|He does not smoke cigarettes.
+cousin|noun|amakivachcha, tog'avachcha|My cousin lives in Bukhara.
+stupid|adjective|ahmoq|That was a stupid mistake.
+twin|noun|egizak|She has a twin sister.
+eastern|adjective|sharqiy|He lives in eastern Uzbekistan.
+sand|noun|qum|The children play in the sand.
+cap|noun|kepka|He wears a blue cap.
+charm|noun|joziba, jozibadorlik|She has a lot of charm.
+lecture|noun|ma'ruza|The lecture starts at ten.
+rescue|verb|qutqarmoq|They rescued the children.
+mess|noun|tartibsizlik|Your room is a mess.
+cream|noun|qaymoq, krem|I like cream in my coffee.
+cancel|verb|bekor qilmoq|They cancelled the flight.
+regret|verb|afsuslanmoq|I regret my words.
+beneath|preposition|ostida|The cat sleeps beneath the table.
+dare|verb|jur'at etmoq|Do not dare to touch it.
+bury|verb|ko'mmoq|They bury the box in the garden.
+motor|noun|motor|The motor makes a loud noise.
+valley|noun|vodiy|The village is in a green valley.
+float|verb|suzib yurmoq|The boat floats on the lake.
+mad|adjective|jahli chiqqan, aqldan ozgan|He is mad at me.
+electric|adjective|elektr|I have an electric car.
+slave|noun|qul|Slaves worked on the farm.
+wealthy|adjective|badavlat|He is a wealthy man.
+coal|noun|ko'mir|They burn coal for heat.
+burst|verb|portlamoq, yorilmoq|The balloon burst.
+rail|noun|rels, temir yo'l|We travel by rail.
+dust|noun|chang|There is dust on the shelf.
+skirt|noun|yubka|She wears a long skirt.
+salt|noun|tuz|Pass me the salt, please.
+brush|noun|cho'tka|I need a new tooth brush.
+chest|noun|ko'krak, sandiq|He has a pain in his chest.
+pump|noun|nasos|The pump brings water to the house.
+golf|noun|golf|He plays golf on Sundays.
+orange|noun|apelsin, to'q sariq|I drink orange juice every morning.
+throat|noun|tomoq|I have a sore throat.
+pregnant|adjective|homilador|She is pregnant.
+gear|noun|jihoz, uzatma|Bring your camping gear.
+click|verb|bosmoq (sichqoncha)|Click on the link.
+poet|noun|shoir|He is a famous poet.
+pile|noun|uyum, to'p|There is a pile of books on my desk.
+pig|noun|cho'chqa|The farmer has ten pigs.
+pot|noun|qozon, tuvak|Put the water in the pot.
+cow|noun|sigir|The cow gives milk.
+curious|adjective|qiziquvchan|Children are curious about everything.
+wooden|adjective|yog'ochdan yasalgan|They sat on a wooden bench.
+tale|noun|ertak, hikoya|This is a tale about a clever fox.
+shelf|noun|tokcha, javon|The book is on the top shelf.
+tail|noun|dum|The dog wags its tail.
+chat|verb|suhbatlashmoq|We chat every evening.
+clothing|noun|kiyim-kechak|The shop sells children's clothing.
+shell|noun|chig'anoq, po'choq|She found a shell on the beach.
+cheese|noun|pishloq|I like cheese sandwiches.
+pipe|noun|quvur|The pipe is broken.
+guitar|noun|gitara|He plays the guitar well.
+flag|noun|bayroq|The flag is blue, white and green.
+piano|noun|pianino|She plays the piano.
+magic|noun|sehr, sehrgarlik|The magic show was great.
+mystery|noun|sir, jumboq|The case is still a mystery.
+ski|verb|chang'i uchmoq|We ski in the mountains.
+whisper|verb|shivirlamoq|Do not whisper in class.
+menu|noun|menyu|Can I see the menu, please?
+moon|noun|oy (osmon jismi)|The moon is bright tonight.
+airline|noun|aviakompaniya|This airline has cheap tickets.
+grandmother|noun|buvi|My grandmother tells good stories.
+coin|noun|tanga|I found a coin in the street.
+bunch|noun|bog'lam, dasta|He gave her a bunch of flowers.
+greet|verb|salomlashmoq|Greet the guests at the door.
+trick|noun|hiyla, fokus|The magician showed us a trick.
+paragraph|noun|abzats|Write a paragraph about your family.
+chocolate|noun|shokolad|I love dark chocolate.
+belt|noun|kamar|He wears a black belt.
+potato|noun|kartoshka|I like fried potatoes.
+stair|noun|zina|The stairs are very steep.
+shine|verb|yorishmoq, charaqlamoq|The sun shines brightly.
+stomach|noun|oshqozon, qorin|My stomach hurts.
+nowhere|adverb|hech qayerda|There is nowhere to sit.
+knife|noun|pichoq|Use a sharp knife.
+bite|verb|tishlamoq|The dog may bite you.
+printer|noun|printer|The printer is out of paper.
+ocean|noun|okean|The ocean is very deep.
+castle|noun|qasr|We visited an old castle.
+hurry|verb|shoshilmoq|Hurry up, we are late.
+hint|noun|ishora, maslahat|Give me a hint.
+hook|noun|ilgak|Hang your coat on the hook.
+bell|noun|qo'ng'iroq, zang|The school bell rings at nine.
+liquid|noun|suyuqlik|Water is a liquid.
+uncle|noun|amaki, tog'a|My uncle lives in Fergana.
+slope|noun|qiyalik, yonbag'ir|We ski down the slope.
+verb|noun|fe'l|Underline the verb in each sentence.
+silly|adjective|ahmoqona, bema'ni|That is a silly question.
+harbor|noun|port, bandargoh|The boats are in the harbor.
+chase|verb|quvmoq|The dog chases the cat.
+sheep|noun|qo'y|The shepherd has a hundred sheep.
+lover|noun|sevuvchi, ixlosmand|He is a music lover.
+rat|noun|kalamush|A rat lives in the cellar.
+portrait|noun|portret|She painted a portrait of her mother.
+tent|noun|chodir|We sleep in a tent.
+stranger|noun|notanish odam|Do not talk to strangers.
+shade|noun|soya|Let us sit in the shade.
+grain|noun|don, g'alla|Wheat is a grain.
+leap|verb|sakramoq|The cat leaps onto the table.
+snap|verb|chirsillatmoq, sinmoq|The stick snapped in two.
+leather|noun|teri|She has a leather bag.
+shore|noun|qirg'oq|We walked along the shore.
+stir|verb|aralashtirmoq|Stir the soup slowly.
+sigh|verb|xo'rsinmoq|She sighed and closed the book.
+slice|noun|bo'lak, tilim|Can I have a slice of bread?
+wander|verb|kezmoq, sarson yurmoq|We wander around the old town.
+gentle|adjective|yumshoq, mayin|He has a gentle voice.
+pale|adjective|rangpar|She looks pale today.
+stain|noun|dog'|There is a stain on my shirt.
+athlete|noun|sportchi|The athlete trains every day.
+tongue|noun|til (a'zo)|He burned his tongue.
+website|noun|veb-sayt|I visit this website every day.
+fool|noun|ahmoq, laqma|Do not be a fool.
+wipe|verb|artmoq|Wipe the table, please.
+weird|adjective|g'alati, qiziq|That is a weird noise.
+gaze|verb|tikilib qaramoq|They gaze at the stars.
+fade|verb|so'nmoq, rangi o'chmoq|The colors fade in the sun.
+cough|verb|yo'talmoq|I cough a lot in winter.
+royal|adjective|qirollik, shohona|They visited the royal palace.
+curtain|noun|parda|Close the curtains, please.
+mayor|noun|shahar hokimi, mer|The mayor opened the new park.
+darkness|noun|qorong'ilik|We sat in the darkness.
+aunt|noun|xola, amma|My aunt lives in Tashkent.
+tournament|noun|turnir|Our team won the tournament.
+ugly|adjective|xunuk|The building is ugly.
+cheek|noun|yonoq|She has red cheeks.
+grin|verb|tirjaymoq|He grinned at me.
+rose|noun|atirgul|He gave her a red rose.
+lazy|adjective|dangasa|My brother is lazy.
+hunger|noun|ochlik|Hunger is a big problem.
+thirst|noun|chanqoq|I feel thirst after the run.
+blog|noun|blog|She writes a travel blog.
+envelope|noun|konvert|Put the letter in an envelope.
+fence|noun|to'siq, devor|There is a fence around the garden.
+adventure|noun|sarguzasht|The trip was a real adventure.
+carpet|noun|gilam|We have a red carpet in the room.
+weekly|adjective|haftalik|I have a weekly meeting.
+golden|adjective|oltin, tillarang|She has golden hair.
+stamp|noun|marka, muhr|I need a stamp for this letter.
+comedy|noun|komediya|We watched a comedy last night.
+storage|noun|saqlash, ombor|We have storage in the basement.
+universe|noun|koinot|The universe is huge.
+horrible|adjective|dahshatli|The weather is horrible.
+noun|noun|ot (grammatik)|A noun is a name of a thing.
+grammar|noun|grammatika|English grammar is not so hard.
+raw|adjective|xom, pishmagan|Do not eat raw meat.
+fiction|noun|badiiy adabiyot|He reads fiction at night.
+ashamed|adjective|uyalgan|I am ashamed of my mistake.
 `;
