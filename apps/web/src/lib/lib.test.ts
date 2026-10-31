@@ -1,0 +1,149 @@
+import { describe, expect, it } from "vitest";
+import { overallBand, readingBand, roundBand } from "./band";
+import { buildSegments } from "./feedback";
+import { MASTERED_BOX, buildQueue, dayNumber, isMastered, review } from "./srs";
+import { demoFeedback, estimateBands, findIssues, measure } from "./writing-analysis";
+
+describe("band", () => {
+  it("IELTS qoidasi bo'yicha yaxlitlaydi", () => {
+    expect(roundBand(6.25)).toBe(6.5);
+    expect(roundBand(6.75)).toBe(7);
+    expect(roundBand(6.125)).toBe(6);
+    expect(roundBand(6.375)).toBe(6.5);
+  });
+  it("umumiy ballni to'rt mezondan hisoblaydi", () => {
+    expect(overallBand([6, 6, 6, 7])).toBe(6.5);
+    expect(overallBand([5.5, 6, 6, 6])).toBe(6);
+    expect(overallBand([])).toBe(0);
+  });
+  it("Reading ballini 40 savolga proporsional o'lchaydi", () => {
+    expect(readingBand(40, 40)).toBe(9);
+    expect(readingBand(30, 40)).toBe(7);
+    expect(readingBand(15, 20)).toBe(7);
+    expect(readingBand(0, 10)).toBe(2.5);
+    expect(readingBand(1, 0)).toBe(0);
+  });
+});
+
+describe("srs", () => {
+  const day = 20_000;
+
+  it("yangi so'z yaxshi eslansa 2-qutiga o'tadi va ertaga qaytadi", () => {
+    const s = review(undefined, "good", day);
+    expect(s).toMatchObject({ box: 2, due: day + 1, seen: 1, lapses: 0 });
+  });
+  it("'easy' ikki quti sakraydi", () => {
+    expect(review(undefined, "easy", day).box).toBe(3);
+  });
+  it("'again' 1-qutiga qaytaradi va xato sonini oshiradi", () => {
+    const advanced = review(review(undefined, "easy", day), "good", day);
+    const failed = review(advanced, "again", day + 3);
+    expect(failed).toMatchObject({ box: 1, due: day + 3, lapses: 1 });
+  });
+  it("quti 5 dan oshmaydi va o'zlashtirilgan hisoblanadi", () => {
+    let s = review(undefined, "easy", day);
+    for (let i = 0; i < 5; i++) s = review(s, "easy", day);
+    expect(s.box).toBe(5);
+    expect(isMastered(s)).toBe(true);
+    expect(isMastered(review(undefined, "good", day))).toBe(false);
+    expect(MASTERED_BOX).toBe(4);
+  });
+  it("navbat: avval muddati o'tganlar, keyin cheklangan yangi so'zlar", () => {
+    const states = {
+      a: { box: 2, due: day - 5, seen: 1, lapses: 0 },
+      b: { box: 3, due: day + 2, seen: 2, lapses: 0 },
+      c: { box: 2, due: day - 1, seen: 1, lapses: 0 },
+    };
+    expect(buildQueue(["a", "b", "c", "d", "e", "f"], states, day, 2)).toEqual(["a", "c", "d", "e"]);
+  });
+  it("dayNumber mahalliy yarim tunda almashadi", () => {
+    const a = dayNumber(new Date(2026, 0, 1, 0, 1));
+    const b = dayNumber(new Date(2026, 0, 1, 23, 59));
+    const c = dayNumber(new Date(2026, 0, 2, 0, 1));
+    expect(b).toBe(a);
+    expect(c).toBe(a + 1);
+  });
+});
+
+describe("buildSegments", () => {
+  it("quote'larni matndan topib, ketma-ket bog'laydi", () => {
+    const text = "People is happy. People is sad.";
+    const ann = { quote: "People is", fix: "People are", why: "x" };
+    const segs = buildSegments(text, [ann, ann]);
+    expect(segs.filter((s) => s.annotation)).toHaveLength(2);
+    expect(segs.map((s) => s.text).join("")).toBe(text);
+  });
+  it("topilmagan va ustma-ust tushgan belgilarni tashlaydi", () => {
+    const text = "He dont know.";
+    const segs = buildSegments(text, [
+      { quote: "He dont", fix: "", why: "" },
+      { quote: "dont know", fix: "", why: "" },
+      { quote: "mavjud emas", fix: "", why: "" },
+    ]);
+    expect(segs.filter((s) => s.annotation)).toHaveLength(1);
+    expect(segs.map((s) => s.text).join("")).toBe(text);
+  });
+});
+
+describe("writing analysis", () => {
+  const fixOf = (text: string) => findIssues(text).map((i) => [i.quote, i.fix]);
+
+  it("odatiy xatolarni topadi", () => {
+    expect(fixOf("Many peoples agree.")).toContainEqual(["peoples", "people"]);
+    expect(fixOf("They need more informations.")).toContainEqual(["informations", "information"]);
+    expect(fixOf("This is more better.")).toContainEqual(["more better", "better"]);
+    expect(fixOf("Much people work.")).toContainEqual(["Much people", "many people"]);
+    expect(fixOf("She go home.")).toContainEqual(["She go", "She goes"]);
+    expect(fixOf("People is happy.")).toContainEqual(["People is", "people are"]);
+    expect(fixOf("It depends of money.")).toContainEqual(["depends of", "depends on"]);
+    expect(fixOf("We discuss about it.")).toContainEqual(["discuss about", "discuss"]);
+    expect(fixOf("i think so.")).toContainEqual(["i", "I"]);
+    expect(fixOf("It is the the best.")).toContainEqual(["the the", "the"]);
+  });
+
+  it("qisqartma va norasmiy so'zlarni belgilaydi", () => {
+    expect(fixOf("They dont care.")).toContainEqual(["dont", "do not"]);
+    expect(fixOf("It can't work.")).toContainEqual(["can't", "cannot"]);
+    expect(fixOf("A lot of kids play.")).toContainEqual(["A lot of", "many / a great deal of"]);
+  });
+
+  it("to'g'ri matnda xato topmaydi", () => {
+    expect(findIssues("However, many people believe that education matters.")).toEqual([]);
+  });
+
+  it("'I' yoki 'i.e.' ni xato deb hisoblamaydi", () => {
+    expect(findIssues("I agree, i.e. the idea works.")).toEqual([]);
+  });
+
+  it("statistikani hisoblaydi", () => {
+    const stats = measure("First point. However, second point!\n\nIn conclusion, done.");
+    expect(stats.paragraphs).toBe(2);
+    expect(stats.sentences).toBe(3);
+    expect(stats.hasConclusion).toBe(true);
+    expect(stats.linkers).toContain("however");
+  });
+
+  it("ballar 3.5 dan 7 gacha cheklangan", () => {
+    const empty = estimateBands(measure(""), 0);
+    expect(Object.values(empty).every((b) => b >= 3.5 && b <= 7)).toBe(true);
+  });
+
+  it("uzun va tartibli inshoga qisqa va xatoli insholardan yuqori ball beradi", () => {
+    const good = Array.from({ length: 4 }, (_, i) =>
+      `Paragraph ${i} explains an important idea. However, many people disagree. For example, cities grow quickly, therefore services improve. ${"Education creates opportunity and changes communities for the better over time. ".repeat(5)}`,
+    ).join("\n\n") + "\n\nIn conclusion, the argument holds.";
+    const weak = "i think peoples dont like it. it is good.";
+    const hi = demoFeedback(good).bands;
+    const lo = demoFeedback(weak).bands;
+    expect(hi.task).toBeGreaterThan(lo.task);
+    expect(hi.grammar).toBeGreaterThanOrEqual(lo.grammar);
+    expect(demoFeedback(weak).annotations.length).toBeGreaterThan(0);
+  });
+
+  it("qisqa inshoga leksika va bog'lanish uchun yuqori ball bermaydi", () => {
+    const short = "However, many people work from home. Moreover, firms save money. Therefore, it is useful. For example, rent is lower.";
+    const bands = demoFeedback(short).bands;
+    expect(bands.lexical).toBeLessThanOrEqual(5.5);
+    expect(bands.coherence).toBeLessThanOrEqual(5.5);
+  });
+});

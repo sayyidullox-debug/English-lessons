@@ -1,26 +1,164 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @theme inline {
+  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-heading: var(--font-sans);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Imtihon varag'i palitrasi */
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-pen: var(--pen);
+  --color-samarkand: var(--samarkand);
+  --color-marker: var(--marker);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  color-scheme: light;
+
+  --paper: #f1f3f9;
+  --ink: #1c2150;
+  --pen: #c8321f;
+  --samarkand: #0f7c8a;
+  --marker: #ffd84d;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: #fbfbfe;
+  --card-foreground: var(--ink);
+  --popover: #fbfbfe;
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: #f6f7fc;
+  --secondary: #e3e7f4;
+  --secondary-foreground: var(--ink);
+  --muted: #e8ebf5;
+  --muted-foreground: #565c8c;
+  --accent: var(--marker);
+  --accent-foreground: var(--ink);
+  --destructive: var(--pen);
+  --border: #cdd3e8;
+  --input: #cdd3e8;
+  --ring: var(--samarkand);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans antialiased;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "kern";
+  }
+  :focus-visible {
+    outline: 2px solid var(--samarkand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  ::selection {
+    background: var(--marker);
+    color: var(--ink);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---- Qizil qalam belgilari ---- */
+
+/** Xato yozilgan so'z: ustiga qizil chiziq tortiladi. */
+.pen-wrong {
+  text-decoration-line: line-through;
+  text-decoration-color: var(--pen);
+  text-decoration-thickness: 2px;
+  text-decoration-skip-ink: none;
+}
+
+/** Imtihonchining qo'lda yozgan tuzatishi. */
+.pen-fix {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--pen);
+}
+
+/** To'lqinli qizil tagchiziq: "bu yerga e'tibor bering". */
+.pen-wave {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--pen);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+
+/** Marker bilan belgilangan joy. */
+.marker-hl {
+  background-image: linear-gradient(transparent 55%, var(--marker) 55%, var(--marker) 92%, transparent 92%);
+}
+
+/** Bosh sahifadagi yagona animatsiya: chiziqlar bir marta chiziladi. */
+@keyframes pen-draw {
+  from {
+    background-size: 0% 2px;
+  }
+  to {
+    background-size: 100% 2px;
+  }
+}
+
+.pen-draw {
+  background-image: linear-gradient(var(--pen), var(--pen));
+  background-repeat: no-repeat;
+  background-position: 0 58%;
+  background-size: 0% 2px;
+  animation: pen-draw 0.55s cubic-bezier(0.3, 0.7, 0.2, 1) forwards;
+  animation-delay: var(--draw-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pen-draw {
+    animation: none;
+    background-size: 100% 2px;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/** O'qish matnlari: bosma kitob kabi. */
+.passage {
+  font-family: var(--font-serif);
+  font-size: 1.1875rem;
+  line-height: 1.75;
+  max-width: 64ch;
 }
