@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { GRAMMAR, TOPIC_LABEL, type GrammarTopic } from "@/content/grammar";
 import { PASSAGES } from "@/content/reading";
 import { SPEAKING_PROMPTS } from "@/content/speaking";
-import { VOCAB } from "@/content/vocab";
+import { LEVELS, LEVEL_LABEL, VOCAB, wordsOfLevel } from "@/content/vocab";
 import { WRITING_PROMPTS } from "@/content/writing";
 import { formatBand } from "@/lib/band";
-import { accuracy, masteredCount, streak } from "@/lib/progress";
-import { dayNumber } from "@/lib/srs";
+import { accuracy, streak } from "@/lib/progress";
+import { dayNumber, isMastered } from "@/lib/srs";
 import { resetProgress, useHydrated, useProgress } from "@/lib/store";
 
 const dateFormat = new Intl.DateTimeFormat("uz-UZ", { day: "numeric", month: "long" });
@@ -22,7 +22,8 @@ export function ProgressDashboard() {
   if (!hydrated) return <div className="min-h-64" aria-hidden="true" />;
 
   const today = dayNumber();
-  const seenWords = Object.keys(data.cards).length;
+  const seenWords = VOCAB.filter((w) => data.cards[w.id] ?? data.cards[`r:${w.id}`]).length;
+  const masteredWords = VOCAB.filter((w) => isMastered(data.cards[w.id])).length;
   const grammarAcc = accuracy(Object.values(data.grammar));
   const topicRows = (Object.keys(TOPIC_LABEL) as GrammarTopic[]).map((topic) => {
     const ids = GRAMMAR.filter((q) => q.topic === topic).map((q) => q.id);
@@ -35,7 +36,7 @@ export function ProgressDashboard() {
     <div>
       <dl className="grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
         <Stat label="Ketma-ket kunlar" value={streak(data.days, today)} />
-        <Stat label="O'zlashtirilgan so'zlar" value={`${masteredCount(data.cards)} / ${VOCAB.length}`} hint={`${seenWords} ta ko'rilgan`} />
+        <Stat label="O'zlashtirilgan so'zlar" value={`${masteredWords} / ${VOCAB.length}`} hint={`${seenWords} ta ko'rilgan`} />
         <Stat label="Grammatika aniqligi" value={grammarAcc === null ? "-" : `${Math.round(grammarAcc * 100)}%`} />
         <Stat label="Gapirish mashqlari" value={data.speaking.length} />
         <Stat label="Yozilgan insholar" value={data.essays.length} />
@@ -46,6 +47,35 @@ export function ProgressDashboard() {
           Hozircha natija yo&apos;q. Birorta mashq qiling, shu yerda taraqqiyotingiz paydo bo&apos;ladi.
         </p>
       )}
+
+      <section aria-labelledby="darajalar" className="mt-14">
+        <h2 id="darajalar" className="text-2xl font-bold tracking-tight">
+          Lug&apos;at darajalari
+        </h2>
+        <ul className="mt-4 max-w-xl divide-y divide-border border-y border-border">
+          {LEVELS.map((level) => {
+            const words = wordsOfLevel(level);
+            const done = words.filter((w) => isMastered(data.cards[w.id])).length;
+            return (
+              <li key={level} className="grid grid-cols-[7rem_1fr_4.5rem] items-center gap-4 py-3">
+                <span>
+                  <span className="font-semibold">{level}</span>
+                  <span className="ml-2 text-sm text-muted-foreground">{LEVEL_LABEL[level]}</span>
+                </span>
+                <span className="h-1.5 rounded-full bg-muted" role="presentation">
+                  <span
+                    className="block h-full rounded-full bg-samarkand"
+                    style={{ width: `${Math.round((done / words.length) * 100)}%` }}
+                  />
+                </span>
+                <span className="text-right text-sm font-semibold tabular-nums">
+                  {done} / {words.length}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
 
       <section aria-labelledby="mavzular" className="mt-14">
         <h2 id="mavzular" className="text-2xl font-bold tracking-tight">

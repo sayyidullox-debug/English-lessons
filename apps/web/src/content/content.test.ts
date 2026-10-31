@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { GRAMMAR } from "./grammar";
 import { PASSAGES } from "./reading";
 import { SPEAKING_PROMPTS } from "./speaking";
-import { VOCAB } from "./vocab";
+import { LEVELS, VOCAB, wordsOfLevel } from "./vocab";
 import { WRITING_PROMPTS } from "./writing";
 
 const unique = (values: string[]) => new Set(values).size === values.length;
@@ -31,8 +31,17 @@ describe("kontent butunligi", () => {
     for (const w of VOCAB) {
       const stem = w.word.slice(0, Math.max(4, w.word.length - 2));
       expect(new RegExp(stem, "i").test(w.example), `${w.word} misoli`).toBe(true);
-      expect(w.collocations.length, w.word).toBeGreaterThan(0);
+      expect(w.uz.trim().length, `${w.word} tarjimasi`).toBeGreaterThan(1);
+      if (w.level === "IELTS") expect(w.collocations?.length, w.word).toBeGreaterThan(0);
     }
+  });
+
+  it("lug'at: har darajada yetarli so'z bor va tartib A1 dan IELTS gacha", () => {
+    for (const level of LEVELS) {
+      expect(wordsOfLevel(level).length, level).toBeGreaterThanOrEqual(36);
+    }
+    const order = VOCAB.map((w) => LEVELS.indexOf(w.level));
+    expect([...order].sort((a, b) => a - b)).toEqual(order);
   });
 
   it("o'qish: savol id'lari butun to'plamda noyob, javoblar yaroqli", () => {

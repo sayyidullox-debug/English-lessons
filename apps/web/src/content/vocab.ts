@@ -1,15 +1,33 @@
+import { BASIC_WORDS } from "./vocab-basic";
+
+/** Darajalar: A1 boshlang'ich, IELTS esa yuqori (taxminan B2-C1) akademik so'zlar. */
+export type Level = "A1" | "A2" | "B1" | "B2" | "IELTS";
+
+export const LEVELS: readonly Level[] = ["A1", "A2", "B1", "B2", "IELTS"];
+
+export const LEVEL_LABEL: Record<Level, string> = {
+  A1: "Boshlang'ich",
+  A2: "Elementar",
+  B1: "O'rta",
+  B2: "O'rta-yuqori",
+  IELTS: "IELTS",
+};
+
 export interface VocabWord {
   id: string;
   word: string;
-  pos: "noun" | "verb" | "adjective" | "adverb";
+  pos: "noun" | "verb" | "adjective" | "adverb" | "phrase";
+  level: Level;
+  /** O'zbekcha tarjima(lar), vergul bilan ajratilgan. Hammasi to'g'ri javob hisoblanadi. */
   uz: string;
-  meaning: string;
+  /** Inglizcha izoh (yuqori darajalarda). */
+  meaning?: string;
   example: string;
   /** Yozishda birga ishlatiladigan iboralar */
-  collocations: string[];
+  collocations?: string[];
 }
 
-export const VOCAB: VocabWord[] = [
+const IELTS_WORDS: Array<Omit<VocabWord, "level">> = [
   {
     id: "mitigate",
     word: "mitigate",
@@ -335,3 +353,13 @@ export const VOCAB: VocabWord[] = [
     collocations: ["on an unprecedented scale", "unprecedented growth"],
   },
 ];
+
+/** A1 dan IELTS gacha barcha so'zlar, daraja tartibida. */
+export const VOCAB: VocabWord[] = [
+  ...BASIC_WORDS,
+  ...IELTS_WORDS.map((w): VocabWord => ({ ...w, level: "IELTS" })),
+];
+
+export function wordsOfLevel(level: Level | "all"): VocabWord[] {
+  return level === "all" ? VOCAB : VOCAB.filter((w) => w.level === level);
+}

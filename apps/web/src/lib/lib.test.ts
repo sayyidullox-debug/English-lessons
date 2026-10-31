@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { SPEAKING_PROMPTS } from "../content/speaking";
+import { VOCAB } from "../content/vocab";
+import { acceptedEnglish, acceptedUz, checkEn, checkUz } from "./answer-check";
 import { overallBand, readingBand, roundBand } from "./band";
 import { analyseSpeech } from "./speaking-analysis";
 import { buildSegments } from "./feedback";
@@ -65,6 +67,77 @@ describe("srs", () => {
     const c = dayNumber(new Date(2026, 0, 2, 0, 1));
     expect(b).toBe(a);
     expect(c).toBe(a + 1);
+  });
+});
+
+describe("javobni tekshirish (lug'at)", () => {
+  it("o'zbekcha: kichik/katta harf, apostrof turlari va kirill bir xil hisoblanadi", () => {
+    expect(checkUz("O'ZBEK", ["o'zbek"]).verdict).toBe("correct");
+    expect(checkUz("oʻzbek", ["o'zbek"]).verdict).toBe("correct");
+    expect(checkUz("o’zbek", ["o'zbek"]).verdict).toBe("correct");
+    expect(checkUz("ўзбек", ["o'zbek"]).verdict).toBe("correct");
+    expect(checkUz("олма", ["olma"]).verdict).toBe("correct");
+    expect(checkUz("мактаб.", ["maktab"]).verdict).toBe("correct");
+  });
+
+  it("bir nechta tarjimadan istalgani to'g'ri", () => {
+    const answers = acceptedUz({ uz: "aka, uka" });
+    expect(answers).toEqual(["aka", "uka"]);
+    expect(checkUz("uka", answers).verdict).toBe("correct");
+    expect(checkUz("opa", answers).verdict).toBe("wrong");
+  });
+
+  it("qavs ichidagi izoh tarjima hisoblanmaydi", () => {
+    expect(acceptedUz({ uz: "majburiy (qonun bo'yicha)" })).toEqual(["majburiy"]);
+  });
+
+  it("apostrof tushib qolsa 'typo' (qabul, lekin imlo ko'rsatiladi)", () => {
+    expect(checkUz("tog", ["tog'"])).toEqual({ verdict: "typo", matched: "tog'" });
+    expect(checkUz("yoq", ["yo'q"]).verdict).toBe("typo");
+  });
+
+  it("bitta harf xato uzun so'zda qabul, qisqa so'zda yo'q", () => {
+    expect(checkUz("maktap", ["maktab"]).verdict).toBe("typo");
+    expect(checkUz("it", ["ot"]).verdict).toBe("wrong");
+    expect(checkUz("uy", ["oy"]).verdict).toBe("wrong");
+  });
+
+  it("fe'lning -moq qismisiz ham qabul", () => {
+    expect(checkUz("ye", ["yemoq"]).verdict).toBe("correct");
+    expect(checkUz("yemoq", ["yemoq"]).verdict).toBe("correct");
+  });
+
+  it("bo'sh yoki noto'g'ri javob 'wrong'", () => {
+    expect(checkUz("   ", ["olma"]).verdict).toBe("wrong");
+    expect(checkUz("nok", ["olma"]).verdict).toBe("wrong");
+  });
+
+  it("inglizcha: 'to', 'a', 'the' va katta harf hisobga olinmaydi", () => {
+    expect(checkEn("To Eat", ["eat"]).verdict).toBe("correct");
+    expect(checkEn("the Book", ["book"]).verdict).toBe("correct");
+    expect(checkEn("Thank  You", ["thank you"]).verdict).toBe("correct");
+  });
+
+  it("inglizcha: bitta harf xato 'typo', boshqa so'z 'wrong'", () => {
+    expect(checkEn("enviroment", ["environment"]).verdict).toBe("typo");
+    expect(checkEn("cat", ["car"]).verdict).toBe("wrong");
+    expect(checkEn("beutiful", ["beautiful"])).toEqual({ verdict: "typo", matched: "beautiful" });
+  });
+
+  it("o'zbekchadan inglizchaga: bir xil tarjimali sinonimlar ham to'g'ri", () => {
+    const famous = VOCAB.find((w) => w.id === "famous")!;
+    const accepted = acceptedEnglish(famous, VOCAB);
+    expect(accepted).toContain("famous");
+    expect(accepted).toContain("popular");
+  });
+
+  it("lug'atdagi har bir so'zning o'z tarjimasi to'g'ri qabul qilinadi", () => {
+    for (const w of VOCAB) {
+      for (const answer of acceptedUz(w)) {
+        expect(checkUz(answer, acceptedUz(w)).verdict, `${w.word}: ${answer}`).toBe("correct");
+      }
+      expect(checkEn(w.word, acceptedEnglish(w, VOCAB)).verdict, w.word).toBe("correct");
+    }
   });
 });
 
