@@ -6,7 +6,8 @@ import type { ReadingPassage, ReadingQuestion, TfngAnswer } from "@/content/read
 import { formatBand, readingBand } from "@/lib/band";
 import { recordReading } from "@/lib/progress";
 import { dayNumber } from "@/lib/srs";
-import { updateProgress } from "@/lib/store";
+import { shuffle, shuffleChoices } from "@/lib/shuffle";
+import { updateProgress, useHydrated } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 type Answers = Record<string, number | TfngAnswer>;
@@ -37,7 +38,26 @@ function useElapsed(running: boolean): number {
   return seconds;
 }
 
+/** Savollar tartibini va tanlov variantlarini aralashtiradi: har urinishda har kimga boshqacha. */
+function prepareReading(passage: ReadingPassage): ReadingPassage {
+  return {
+    ...passage,
+    questions: shuffle(passage.questions).map((q) =>
+      q.kind === "choice" ? { ...q, ...shuffleChoices(q.options, q.answer) } : q,
+    ),
+  };
+}
+
 export function ReadingPractice({ passage }: { passage: ReadingPassage }) {
+  const hydrated = useHydrated();
+  const [attempt, setAttempt] = useState(0);
+  // Tasodifiy tartib faqat brauzerda tuziladi, aks holda server va mijoz tartibi mos kelmaydi
+  if (!hydrated) return <div className="min-h-[40rem]" aria-hidden="true" />;
+  return <Practice key={attempt} passage={passage} onRetry={() => setAttempt((n) => n + 1)} />;
+}
+
+function Practice({ passage: source, onRetry }: { passage: ReadingPassage; onRetry: () => void }) {
+  const [passage] = useState(() => prepareReading(source));
   const [answers, setAnswers] = useState<Answers>({});
   const [submitted, setSubmitted] = useState(false);
   const elapsed = useElapsed(!submitted);
@@ -60,9 +80,8 @@ export function ReadingPractice({ passage }: { passage: ReadingPassage }) {
   };
 
   const reset = () => {
-    setAnswers({});
-    setSubmitted(false);
     window.scrollTo({ top: 0 });
+    onRetry();
   };
 
   return (

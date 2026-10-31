@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { overallBand, readingBand, roundBand } from "./band";
 import { buildSegments } from "./feedback";
+import { shuffle, shuffleChoices } from "./shuffle";
 import { MASTERED_BOX, buildQueue, dayNumber, isMastered, review } from "./srs";
 import { demoFeedback, estimateBands, findIssues, measure } from "./writing-analysis";
 
@@ -62,6 +63,41 @@ describe("srs", () => {
     const c = dayNumber(new Date(2026, 0, 2, 0, 1));
     expect(b).toBe(a);
     expect(c).toBe(a + 1);
+  });
+});
+
+describe("shuffle", () => {
+  const sequence = (values: number[]) => {
+    let i = 0;
+    return () => values[i++ % values.length]!;
+  };
+
+  it("elementlarni yo'qotmaydi va asl massivni o'zgartirmaydi", () => {
+    const input = [1, 2, 3, 4, 5, 6];
+    const out = shuffle(input);
+    expect([...out].sort()).toEqual(input);
+    expect(input).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+
+  it("bir xil rng bir xil natija beradi", () => {
+    const a = shuffle(["a", "b", "c", "d"], sequence([0.1, 0.9, 0.5]));
+    const b = shuffle(["a", "b", "c", "d"], sequence([0.1, 0.9, 0.5]));
+    expect(a).toEqual(b);
+  });
+
+  it("to'g'ri javob matni aralashtirishdan keyin ham o'zgarmaydi", () => {
+    const options = ["live", "have lived", "am living", "lived"];
+    for (let trial = 0; trial < 200; trial++) {
+      const s = shuffleChoices(options, 1);
+      expect(s.options[s.answer]).toBe("have lived");
+      expect([...s.options].sort()).toEqual([...options].sort());
+    }
+  });
+
+  it("javob joyi har doim bir xil emas", () => {
+    const positions = new Set<number>();
+    for (let trial = 0; trial < 200; trial++) positions.add(shuffleChoices(["a", "b", "c", "d"], 0).answer);
+    expect(positions.size).toBeGreaterThan(1);
   });
 });
 

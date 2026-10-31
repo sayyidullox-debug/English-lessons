@@ -7,8 +7,8 @@ IELTS inglizcha tayyorgarlik sayti o'zbek o'quvchilari uchun. Interfeys o'zbekch
 | Bo'lim | Nima qiladi |
 | --- | --- |
 | Lug'at | 36 ta akademik so'z. Leitner takrorlash tizimi: bilmagan so'z bugun, bilgani kunlar o'tib qaytadi. Talaffuzni tinglash, klaviatura (1/2/3). |
-| Grammatika | 24 savol, 6 mavzu. Har javobdan keyin o'zbekcha tushuntirish. Xato javob chiziladi, to'g'risi qizil qalamda yoziladi. |
-| O'qish | IELTS formatidagi matn: True / False / Not Given va tanlov savollari. Taymer, har javobning matndagi dalili, taxminiy band. |
+| Grammatika | 24 savollik bankadan har urinishda 12 tasi tasodifiy tanlanadi, variantlar aralashadi. 6 mavzu. Har javobdan keyin o'zbekcha tushuntirish. Xato javob chiziladi, to'g'risi qizil qalamda yoziladi. |
+| O'qish | IELTS formatidagi matn: True / False / Not Given va tanlov savollari. Savollar tartibi va tanlov variantlari har urinishda aralashadi. Taymer, har javobning matndagi dalili, taxminiy band. |
 | Yozish | Task 2 mavzulari. To'rt mezon bo'yicha ball, qizil qalamli insho, kuchli tomonlar va keyingi qadamlar. Qoralama avtomatik saqlanadi. |
 | Natijalar | Ketma-ket kunlar, o'zlashtirilgan so'zlar, mavzu bo'yicha aniqlik, ball dinamikasi. |
 

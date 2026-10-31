@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { GRAMMAR, TOPIC_LABEL, type GrammarQuestion, type GrammarTopic } from "@/content/grammar";
 import { dayNumber } from "@/lib/srs";
 import { recordGrammar } from "@/lib/progress";
+import { shuffle, shuffleChoices } from "@/lib/shuffle";
 import { updateProgress } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -12,22 +13,28 @@ type Filter = GrammarTopic | "all";
 
 const TOPICS = Object.keys(TOPIC_LABEL) as GrammarTopic[];
 
-function shuffle<T>(items: readonly T[]): T[] {
-  const copy = [...items];
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j]!, copy[i]!];
-  }
-  return copy;
+/** Bir urinishdagi savollar soni. Banka kattaroq bo'lgani uchun har safar boshqa to'plam tushadi. */
+const RUN_SIZE = 12;
+
+interface PreparedQuestion extends Omit<GrammarQuestion, "options"> {
+  options: string[];
+}
+
+/** Savollarni tasodifiy tanlab, har birining variantlarini aralashtiradi: yonma-yon o'tirganlar ko'chira olmaydi. */
+function prepare(pool: readonly GrammarQuestion[]): PreparedQuestion[] {
+  return shuffle(pool)
+    .slice(0, RUN_SIZE)
+    .map((q) => ({ ...q, ...shuffleChoices(q.options, q.answer) }));
 }
 
 export function GrammarQuiz() {
   const [filter, setFilter] = useState<Filter>("all");
-  const [run, setRun] = useState<GrammarQuestion[] | null>(null);
+  const [run, setRun] = useState<PreparedQuestion[] | null>(null);
 
   if (run) return <Run questions={run} onExit={() => setRun(null)} />;
 
-  const count = filter === "all" ? GRAMMAR.length : GRAMMAR.filter((q) => q.topic === filter).length;
+  const pool = filter === "all" ? GRAMMAR : GRAMMAR.filter((q) => q.topic === filter);
+  const count = Math.min(RUN_SIZE, pool.length);
 
   return (
     <div>
@@ -53,9 +60,7 @@ export function GrammarQuiz() {
       </fieldset>
       <Button
         className="mt-8 h-11 px-5 text-base"
-        onClick={() =>
-          setRun(shuffle(filter === "all" ? GRAMMAR : GRAMMAR.filter((q) => q.topic === filter)))
-        }
+        onClick={() => setRun(prepare(pool))}
       >
         Boshlash ({count} ta savol)
       </Button>
@@ -63,10 +68,10 @@ export function GrammarQuiz() {
   );
 }
 
-function Run({ questions, onExit }: { questions: GrammarQuestion[]; onExit: () => void }) {
+function Run({ questions, onExit }: { questions: PreparedQuestion[]; onExit: () => void }) {
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
-  const [wrong, setWrong] = useState<GrammarQuestion[]>([]);
+  const [wrong, setWrong] = useState<PreparedQuestion[]>([]);
   const [day] = useState(() => dayNumber());
 
   const done = index >= questions.length;
@@ -106,7 +111,7 @@ function Run({ questions, onExit }: { questions: GrammarQuestion[]; onExit: () =
             <ul className="mt-3 space-y-4">
               {wrong.map((q) => (
                 <li key={q.id} className="max-w-[60ch]">
-                  <p className="font-serif text-lg">{q.sentence.replace("____", q.options[q.answer])}</p>
+                  <p className="font-serif text-lg">{q.sentence.replace("____", q.options[q.answer] ?? "")}</p>
                   <p className="mt-1 text-sm text-muted-foreground">{q.explanation}</p>
                 </li>
               ))}
